@@ -14,3 +14,23 @@
     state: present
     enablerepo: nginx
     disablerepo: "*"
+
+- name: setup nginx.conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: drop nginx/conf.d files
+  file:
+      state: "{{ item }}"
+      path: /etc/nginx/conf.d/
+      owner: root
+      group: root
+      mode: 0755
+  with_items:
+    - absent
+    - directory
+  when: extravar_bootstrapping == "yes"
