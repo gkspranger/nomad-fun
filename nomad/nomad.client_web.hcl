@@ -9,12 +9,6 @@ plugin "raw_exec" {
   }
 }
 
-plugin "exec" {
-  config {
-    enabled = true
-  }
-}
-
 client {
   enabled = true
   servers = ["192.168.10.10"]
