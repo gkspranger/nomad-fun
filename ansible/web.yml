@@ -6,4 +6,4 @@
   connection: local
   become: True
   roles:
-  - role: roles/nginx
+  - role: roles/resource/nginx
