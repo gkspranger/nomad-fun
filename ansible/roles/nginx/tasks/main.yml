@@ -33,4 +33,4 @@
   with_items:
     - absent
     - directory
-  when: extravar_bootstrapping == "yes"
+  when: extravar_bootstrapping | default("no") == "yes"
