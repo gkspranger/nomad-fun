@@ -45,7 +45,7 @@ job "web-cron" {
         args    = [
           "-c",
           <<-EOF
-          export PATH="/home/nomad/.local/bin:/home/nomad/bin:$PATH"
+          export PATH="/root/.local/bin:/root/bin:$PATH"
           cd ${NOMAD_TASK_DIR}/repo/ansible
           which ansible-playbook
           ansible-playbook --version
