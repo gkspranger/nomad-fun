@@ -1,1 +1,1 @@
-# nomad-fun
+# Fun with Nomad
