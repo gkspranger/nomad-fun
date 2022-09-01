@@ -6,10 +6,10 @@ job "bootstrap-web" {
     run_uuid = "${uuidv4()}"
   }
 
-  // periodic {
-  //   cron             = "* * * * * *"
-  //   prohibit_overlap = true
-  // }
+  periodic {
+    cron             = "* * * * * *"
+    prohibit_overlap = true
+  }
 
   constraint {
     attribute = "${meta.state}"
@@ -19,6 +19,11 @@ job "bootstrap-web" {
   constraint {
     attribute = "${meta.role}"
     value     = "web"
+  }
+
+  constraint {
+    attribute = "${meta.env}"
+    value     = "dev"
   }
 
   group "bootstrap-web" {
@@ -64,7 +69,7 @@ job "bootstrap-web" {
           which ansible-playbook
           ansible-playbook --version
           ansible-playbook \
-          -i 127.0.0.1, \
+          -i localhost, \
           web.yml \
           -e "extravar_bootstrapping=yes" \
           -e "extravar_env=dev" \

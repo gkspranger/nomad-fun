@@ -16,5 +16,6 @@ client {
   meta {
     state = "bootstrapping"
     role = "web"
+    env = "dev"
   }
 }

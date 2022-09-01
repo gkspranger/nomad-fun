@@ -7,7 +7,7 @@ job "web-cron" {
   }
 
   periodic {
-    cron             = "*/20 * * * * *"
+    cron             = "*/5 * * * * *"
     prohibit_overlap = true
   }
 
@@ -19,6 +19,11 @@ job "web-cron" {
   constraint {
     attribute = "${meta.role}"
     value     = "web"
+  }
+
+  constraint {
+    attribute = "${meta.env}"
+    value     = "dev"
   }
 
   group "web-cron" {
@@ -45,7 +50,7 @@ job "web-cron" {
           which ansible-playbook
           ansible-playbook --version
           ansible-playbook \
-          -i 127.0.0.1, \
+          -i localhost, \
           web.yml \
           -e "extravar_env=dev" \
           -e "extravar_role=web"
