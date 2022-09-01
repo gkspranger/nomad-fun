@@ -1,0 +1,7 @@
+---
+
+- name: install cpanm
+  yum:
+    name:
+      - perl-App-cpanminus
+    state: present

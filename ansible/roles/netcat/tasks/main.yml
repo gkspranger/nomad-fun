@@ -1,0 +1,6 @@
+---
+
+- name: install netcat
+  yum:
+    name: nmap-ncat
+    state: present

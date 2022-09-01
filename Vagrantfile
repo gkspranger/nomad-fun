@@ -9,7 +9,7 @@ yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.
 useradd -u 5000 nomad
 
 # install packages
-yum -y install nomad nmap-ncat tree git
+yum -y install nomad git
 
 # setup nomad 2
 nomad -autocomplete-install

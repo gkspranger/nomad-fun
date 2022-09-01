@@ -1,0 +1,10 @@
+---
+
+- name: setup nomad config
+  template:
+    src: nomad.hcl
+    dest: /etc/nomad.d/nomad.hcl
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nomad
