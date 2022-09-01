@@ -1,0 +1,23 @@
+---
+
+- name: setup role group
+  add_host:
+    name: localhost
+    groups:
+      - "{{ extravar_role }}"
+  changed_when: False
+
+- name: output role stanza
+  debug:
+    msg: "{{ groupvar_role_output }}"
+
+- name: setup env group
+  add_host:
+    name: localhost
+    groups:
+      - "{{ extravar_env }}"
+  changed_when: False
+
+- name: output env stanza
+  debug:
+    msg: "{{ groupvar_env_output }}"

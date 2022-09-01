@@ -1,0 +1,7 @@
+---
+
+all_roles:
+  - web
+
+all_envs:
+  - dev

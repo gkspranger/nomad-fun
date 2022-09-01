@@ -1,11 +1,5 @@
 ---
 
-- name: check extravars
-  assert:
-    that:
-      - extravar_env in ["dev"]
-      - extravar_role in ["web"]
-
 - name: setup nomad config
   template:
     src: nomad.hcl

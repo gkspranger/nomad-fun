@@ -1,0 +1,7 @@
+---
+
+- name: check extravars
+  assert:
+    that:
+      - extravar_env in all_envs
+      - extravar_role in all_roles

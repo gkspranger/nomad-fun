@@ -4,7 +4,9 @@
   connection: local
   become: True
   roles:
+  - role: roles/assert
+  - role: roles/setup
   - role: roles/yum
   - role: roles/netcat
   - role: roles/cpan
-  - role: roles/nomad
+  # - role: roles/nomad

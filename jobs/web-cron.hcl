@@ -1,4 +1,4 @@
-job "bootstrap-web" {
+job "web-cron" {
   datacenters = ["dc1"]
   type = "sysbatch"
 
@@ -6,14 +6,14 @@ job "bootstrap-web" {
     run_uuid = "${uuidv4()}"
   }
 
-  // periodic {
-  //   cron             = "* * * * * *"
-  //   prohibit_overlap = true
-  // }
+  periodic {
+    cron             = "*/20 * * * * *"
+    prohibit_overlap = true
+  }
 
   constraint {
     attribute = "${meta.state}"
-    value     = "bootstrapping"
+    value     = "ready"
   }
 
   constraint {
@@ -21,27 +21,8 @@ job "bootstrap-web" {
     value     = "web"
   }
 
-  group "bootstrap-web" {
-    task "install-ansible" {
-      lifecycle {
-        hook = "prestart"
-        sidecar = false
-      }
-
-      driver = "raw_exec"
-
-      config {
-        command = "/usr/bin/bash"
-        args    = [
-          "-c",
-          <<-EOF
-          pip3 install --user ansible-core==2.13.3
-          EOF
-        ]
-      }
-    }
-
-    task "bootstrap-node" {
+  group "web-cron" {
+    task "config-node" {
       driver = "raw_exec"
 
       artifact {
@@ -66,7 +47,6 @@ job "bootstrap-web" {
           ansible-playbook \
           -i 127.0.0.1, \
           web.yml \
-          -e "extravar_bootstrapping=yes" \
           -e "extravar_env=dev" \
           -e "extravar_role=web"
           EOF
