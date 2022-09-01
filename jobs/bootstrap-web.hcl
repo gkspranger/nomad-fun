@@ -2,10 +2,14 @@ job "bootstrap-web" {
   datacenters = ["dc1"]
   type = "sysbatch"
 
-  periodic {
-    cron             = "* * * * * *"
-    prohibit_overlap = true
+  meta {
+    run_uuid = "${uuidv4()}"
   }
+
+  // periodic {
+  //   cron             = "* * * * * *"
+  //   prohibit_overlap = true
+  // }
 
   constraint {
     attribute = "${meta.state}"
@@ -42,7 +46,7 @@ job "bootstrap-web" {
 
       artifact {
         source = "git::https://github.com/gkspranger/nomad-fun"
-        destination = "local/nomad-fun"
+        destination = "local/repo"
 
         options {
           ref = "main"
@@ -55,7 +59,11 @@ job "bootstrap-web" {
         args    = [
           "-c",
           <<-EOF
-          echo "hello world"
+          export PATH="/home/nomad/.local/bin:/home/nomad/bin:$PATH"
+          cd ${NOMAD_TASK_DIR}/repo/ansible
+          which ansible-playbook
+          ansible-playbook --version
+          ansible-playbook -i 127.0.0.1, web.yml -e "extravar_env=dev"
           EOF
         ]
       }

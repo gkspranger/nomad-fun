@@ -4,5 +4,6 @@
   connection: local
   become: True
   roles:
+  - role: roles/yum
   - role: roles/netcat
   - role: roles/cpan

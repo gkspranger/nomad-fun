@@ -1,0 +1,9 @@
+---
+
+- name: setup yum.conf
+  template:
+    src: yum.conf
+    dest: /etc/yum.conf
+    owner: root
+    group: root
+    mode: 0644
