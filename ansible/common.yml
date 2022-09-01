@@ -7,3 +7,4 @@
   - role: roles/yum
   - role: roles/netcat
   - role: roles/cpan
+  - role: roles/nomad

@@ -15,6 +15,7 @@ client {
 
   meta {
     state = "ready"
-    role = "web"
+    role = "{{ extravar_role }}"
+    env = "{{ extravar_env }}"
   }
 }
