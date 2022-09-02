@@ -13,6 +13,8 @@
   ansible.builtin.dnf:
     name: nomad
     state: present
+    disablerepo: "*"
+    enablerepo: hashicorp
 
 - name: setup nomad.d/nomad.hcl
   ansible.builtin.template:
