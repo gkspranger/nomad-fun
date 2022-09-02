@@ -29,9 +29,16 @@ systemctl daemon-reload
 systemctl start nomad.service
 SCRIPT
 
-$client_web = <<-SCRIPT
+$client_ws = <<-SCRIPT
 yum -y install python39-devel
-cp /vagrant/nomad/nomad.client_web.hcl /etc/nomad.d/nomad.hcl
+cp /vagrant/nomad/nomad.client_ws.hcl /etc/nomad.d/nomad.hcl
+systemctl daemon-reload
+systemctl start nomad.service
+SCRIPT
+
+$client_wh = <<-SCRIPT
+yum -y install python39-devel
+cp /vagrant/nomad/nomad.client_wh.hcl /etc/nomad.d/nomad.hcl
 systemctl daemon-reload
 systemctl start nomad.service
 SCRIPT
@@ -66,7 +73,7 @@ Vagrant.configure("2") do |config|
     n.vm.network "forwarded_port", guest: 4646, host: 5646
 
     n.vm.provision "shell", inline: $base
-    n.vm.provision "shell", inline: $client_web
+    n.vm.provision "shell", inline: $client_ws
   end
 
   config.vm.define "client2" do |n|

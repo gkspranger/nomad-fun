@@ -1,7 +1,7 @@
 ---
 
 all_roles:
-  - web
+  - ws
 
 all_envs:
   - dev

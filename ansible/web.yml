@@ -1,9 +1,0 @@
----
-
-- import_playbook: common.yml
-
-- hosts: localhost
-  connection: local
-  become: True
-  roles:
-  - role: roles/resource/nginx

@@ -1,4 +1,4 @@
-job "web-cron" {
+job "bootstrap-ws-dev" {
   datacenters = ["dc1"]
   type = "sysbatch"
 
@@ -7,18 +7,18 @@ job "web-cron" {
   }
 
   periodic {
-    cron             = "*/5 * * * * *"
+    cron             = "* * * * * *"
     prohibit_overlap = true
   }
 
   constraint {
     attribute = "${meta.state}"
-    value     = "ready"
+    value     = "bootstrapping"
   }
 
   constraint {
     attribute = "${meta.role}"
-    value     = "web"
+    value     = "ws"
   }
 
   constraint {
@@ -26,7 +26,26 @@ job "web-cron" {
     value     = "dev"
   }
 
-  group "web-cron" {
+  group "bootstrap-ws-dev" {
+    task "install-ansible" {
+      lifecycle {
+        hook = "prestart"
+        sidecar = false
+      }
+
+      driver = "raw_exec"
+
+      config {
+        command = "/usr/bin/bash"
+        args    = [
+          "-c",
+          <<-EOF
+          pip3 install --user ansible-core==2.13.3
+          EOF
+        ]
+      }
+    }
+
     task "config-node" {
       driver = "raw_exec"
 
@@ -45,15 +64,14 @@ job "web-cron" {
         args    = [
           "-c",
           <<-EOF
-          export PATH="/root/.local/bin:/root/bin:$PATH"
+          export PATH="/home/nomad/.local/bin:/home/nomad/bin:$PATH"
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          which ansible-playbook
-          ansible-playbook --version
           ansible-playbook \
           -i localhost, \
           web.yml \
+          -e "extravar_bootstrapping=yes" \
           -e "extravar_env=dev" \
-          -e "extravar_role=web"
+          -e "extravar_role=ws"
           EOF
         ]
       }
