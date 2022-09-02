@@ -1,6 +1,6 @@
 
 - name: setup jq
-  get_url:
+  ansible.builtin.get_url:
     dest: /usr/bin/jq
     url: https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
     owner: root

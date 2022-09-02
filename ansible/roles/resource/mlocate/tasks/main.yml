@@ -1,12 +1,12 @@
 ---
 
 - name: install mlocate
-  yum:
+  ansible.builtin.dnf:
     name: mlocate
     state: present
 
 - name: setup updatedb.conf
-  template:
+  ansible.builtin.template:
     src: updatedb.conf
     dest: /etc/updatedb.conf
     owner: root

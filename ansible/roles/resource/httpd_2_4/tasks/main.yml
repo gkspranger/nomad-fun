@@ -1,6 +1,6 @@
 ---
 
 - name: install httpd 2.4
-  yum:
+  ansible.builtin.dnf:
     name: httpd
     state: present

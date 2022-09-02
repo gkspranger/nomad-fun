@@ -1,6 +1,6 @@
 ---
 
 - name: install development tools
-  yum:
+  ansible.builtin.dnf:
     name: "@Development tools"
     state: present

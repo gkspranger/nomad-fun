@@ -1,27 +1,27 @@
 ---
 
 - name: setup role group
-  add_host:
+  ansible.builtin.add_host:
     name: localhost
     groups:
       - "{{ extravar_role }}"
   changed_when: False
 
 - name: output role stanza
-  debug:
+  ansible.builtin.debug:
     msg: "{{ groupvar_role_output }}"
 
 - name: setup env group
-  add_host:
+  ansible.builtin.add_host:
     name: localhost
     groups:
       - "{{ extravar_env }}"
   changed_when: False
 
 - name: output env stanza
-  debug:
+  ansible.builtin.debug:
     msg: "{{ groupvar_env_output }}"
 
 - name: setup is_bootstrapping var
-  set_fact:
+  ansible.builtin.set_fact:
     is_bootstrapping: "{{ True if 'yes' == extravar_bootstrapping | default('no') else False }}"

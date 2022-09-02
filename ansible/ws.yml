@@ -1,6 +1,6 @@
 ---
 
-- import_playbook: pre_common.yml
+- ansible.builtin.import_playbook: pre_common.yml
 
 - hosts: localhost
   connection: local
@@ -8,4 +8,4 @@
   roles:
     - role: roles/resource/httpd_2_4
 
-- import_playbook: post_common.yml
+- ansible.builtin.import_playbook: post_common.yml

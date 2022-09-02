@@ -1,0 +1,17 @@
+---
+
+- name: config bashrc
+  ansible.builtin.template:
+    src: bashrc
+    dest: /etc/bashrc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: config profile.d/bash.sh
+  ansible.builtin.template:
+    src: bash.sh
+    dest: /etc/profile.d/bash.sh
+    owner: root
+    group: root
+    mode: 0644
