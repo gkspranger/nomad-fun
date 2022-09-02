@@ -24,4 +24,4 @@
 
 - name: setup is_bootstrapping var
   set_fact:
-    is_bootstrapping: "{{ True if 'yes' == extravar_bootstrapping else False }}"
+    is_bootstrapping: "{{ True if 'yes' == extravar_bootstrapping | default('no') else False }}"
