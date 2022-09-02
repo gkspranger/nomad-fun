@@ -1,0 +1,8 @@
+---
+
+- name: register/start httpd service
+  service:
+    name: httpd
+    enabled: True
+    state: started
+  when: is_bootstrapping

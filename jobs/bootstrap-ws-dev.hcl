@@ -68,7 +68,7 @@ job "bootstrap-ws-dev" {
           cd ${NOMAD_TASK_DIR}/repo/ansible
           ansible-playbook \
           -i localhost, \
-          web.yml \
+          ws.yml \
           -e "extravar_bootstrapping=yes" \
           -e "extravar_env=dev" \
           -e "extravar_role=ws"

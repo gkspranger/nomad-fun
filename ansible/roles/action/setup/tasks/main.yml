@@ -21,3 +21,7 @@
 - name: output env stanza
   debug:
     msg: "{{ groupvar_env_output }}"
+
+- name: setup is_bootstrapping var
+  set_fact:
+    is_bootstrapping: "{{ True if 'yes' == extravar_bootstrapping else False }}"

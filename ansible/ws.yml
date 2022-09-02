@@ -1,9 +1,11 @@
 ---
 
-- import_playbook: common.yml
+- import_playbook: pre_common.yml
 
-# - hosts: localhost
-#   connection: local
-#   become: True
-#   roles:
-#   - role: roles/resource/httpd_2_4
+- hosts: localhost
+  connection: local
+  become: True
+  roles:
+    - role: roles/resource/httpd_2_4
+
+- import_playbook: post_common.yml
