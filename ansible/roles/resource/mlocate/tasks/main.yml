@@ -5,7 +5,7 @@
     name: mlocate
     state: present
 
-- name: setup updatedb.conf
+- name: setup etc/updatedb.conf
   ansible.builtin.template:
     src: updatedb.conf
     dest: /etc/updatedb.conf

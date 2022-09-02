@@ -1,6 +1,6 @@
 ---
 
-- name: setup yum.conf
+- name: setup dnf/dnf.conf
   ansible.builtin.template:
     src: dnf.conf
     dest: /etc/dnf/dnf.conf

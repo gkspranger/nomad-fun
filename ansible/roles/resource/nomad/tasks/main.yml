@@ -1,6 +1,6 @@
 ---
 
-- name: setup nomad config
+- name: setup nomad.d/nomad.hcl
   ansible.builtin.template:
     src: nomad.hcl
     dest: /etc/nomad.d/nomad.hcl

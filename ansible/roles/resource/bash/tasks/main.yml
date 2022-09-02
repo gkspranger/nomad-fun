@@ -1,6 +1,6 @@
 ---
 
-- name: config bashrc
+- name: config etc/bashrc
   ansible.builtin.template:
     src: bashrc
     dest: /etc/bashrc

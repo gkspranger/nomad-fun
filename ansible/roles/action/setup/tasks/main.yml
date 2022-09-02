@@ -22,6 +22,6 @@
   ansible.builtin.debug:
     msg: "{{ groupvar_env_output }}"
 
-- name: setup is_bootstrapping var
+- name: setup is_baking_ami var
   ansible.builtin.set_fact:
-    is_bootstrapping: "{{ True if 'yes' == extravar_bootstrapping | default('no') else False }}"
+    is_baking_ami: "{{ extravar_bakingami | default('no') | bool }}"
