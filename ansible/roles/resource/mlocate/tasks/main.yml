@@ -1,0 +1,14 @@
+---
+
+- name: install mlocate
+  yum:
+    name: mlocate
+    state: present
+
+- name: setup updatedb.conf
+  template:
+    src: updatedb.conf
+    dest: /etc/updatedb.conf
+    owner: root
+    group: root
+    mode: 0644

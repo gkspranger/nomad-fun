@@ -7,6 +7,9 @@
     - role: roles/action/assert
     - role: roles/action/setup
     - role: roles/resource/yum
+    - role: roles/resource/development_tools
     - role: roles/resource/netcat
     - role: roles/resource/cpan
     - role: roles/resource/tree
+    - role: roles/resource/jq
+    - role: roles/resource/mlocate
