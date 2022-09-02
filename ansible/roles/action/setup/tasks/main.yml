@@ -25,3 +25,7 @@
 - name: setup is_baking_ami var
   ansible.builtin.set_fact:
     is_baking_ami: "{{ extravar_bakingami | default('no') | bool }}"
+
+- name: setup is_bootstrapping var
+  ansible.builtin.set_fact:
+    is_bootstrapping: "{{ extravar_bootstrapping | default('no') | bool }}"
