@@ -1,5 +1,19 @@
 ---
 
+- name: install hashicorp repo
+  ansible.builtin.yum_repository:
+    name: hashicorp
+    description: Hashicorp Stable - $basearch
+    baseurl: https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable
+    gpgkey: https://rpm.releases.hashicorp.com/gpg
+    gpgcheck: True
+    enabled: False
+
+- name: install nomad
+  ansible.builtin.dnf:
+    name: nomad
+    state: present
+
 - name: setup nomad.d/nomad.hcl
   ansible.builtin.template:
     src: nomad.hcl
@@ -8,3 +22,10 @@
     group: root
     mode: 0644
   notify: restart nomad
+
+- name: register/start nomad service
+  ansible.builtin.service:
+    name: nomad
+    enabled: True
+    state: started
+  when: not is_baking_ami
