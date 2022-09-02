@@ -6,7 +6,7 @@
   roles:
     - role: roles/action/assert
     - role: roles/action/setup
-    - role: roles/resource/yum
+    - role: roles/resource/dnf
     - role: roles/resource/development_tools
     - role: roles/resource/netcat
     - role: roles/resource/cpan
