@@ -76,7 +76,7 @@
 
 - name: setup conf.d/* config files for vhosts
   ansible.builtin.template:
-    src: default_vhost.conf
+    src: vhost.conf
     dest: "/etc/httpd/conf.d/{{ item.prefix | default('') }}{{ item.servername }}.conf"
     owner: apache
     group: apache
