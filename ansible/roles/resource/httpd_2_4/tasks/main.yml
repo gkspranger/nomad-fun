@@ -4,3 +4,18 @@
   ansible.builtin.dnf:
     name: httpd
     state: present
+
+- name: install mod_ssl
+  ansible.builtin.dnf:
+    name: mod_ssl
+    state: present
+  when: apache_mod_ssl | default(False)
+
+- name: create dummy ssl vhost file
+  ansible.builtin.copy:
+    content: "# {{ config_managed }}"
+    dest: /etc/httpd/conf.d/ssl.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: apache_mod_ssl | default(False)

@@ -7,9 +7,9 @@
       - "{{ extravar_role }}"
   changed_when: False
 
-- name: output role stanza
-  ansible.builtin.debug:
-    msg: "{{ groupvar_role_output }}"
+# - name: output role stanza
+#   ansible.builtin.debug:
+#     msg: "{{ groupvar_role_output }}"
 
 - name: setup env group
   ansible.builtin.add_host:
@@ -18,9 +18,9 @@
       - "{{ extravar_env }}"
   changed_when: False
 
-- name: output env stanza
-  ansible.builtin.debug:
-    msg: "{{ groupvar_env_output }}"
+# - name: output env stanza
+#   ansible.builtin.debug:
+#     msg: "{{ groupvar_env_output }}"
 
 - name: setup is_baking_ami var
   ansible.builtin.set_fact:

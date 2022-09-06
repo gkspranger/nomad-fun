@@ -5,3 +5,5 @@ all_roles:
 
 all_envs:
   - dev
+
+config_managed: This file has been customized
