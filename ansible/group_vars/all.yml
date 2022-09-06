@@ -1,6 +1,7 @@
 ---
 
 all_roles:
+  - wh
   - ws
 
 all_envs:
