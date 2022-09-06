@@ -9,6 +9,6 @@
   roles:
     - role: roles/resource/common
     - role: roles/resource/httpd_2_4
-    - role: roles/resource/wh
+    - role: roles/wh
 
 - ansible.builtin.import_playbook: post_common.yml
