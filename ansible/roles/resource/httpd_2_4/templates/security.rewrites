@@ -1,0 +1,2 @@
+# This should stop any URL containing a request for a cmd.exe
+RewriteRule	^.*cmd\.exe.* - [R=404,L]
