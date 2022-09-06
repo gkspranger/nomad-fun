@@ -14,7 +14,11 @@ client {
   servers = ["192.168.10.10"]
 
   meta {
+    {% if is_baking_ami | default(False) %}
+    state = "bootstrapping"
+    {% else %}
     state = "ready"
+    {% endif %}
     role = "{{ extravar_role }}"
     env = "{{ extravar_env }}"
   }
