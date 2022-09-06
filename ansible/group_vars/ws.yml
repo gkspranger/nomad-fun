@@ -7,7 +7,7 @@ apache_vhosts:
     serveralias: services*.example.com
   - servername: secure.example.com
     serveralias: secure*.example.com
-    prefix: 000
+    prefix: "000"
   - servername: login.example.com
     serveralias: login*.example.com
   - servername: assets.example.com
