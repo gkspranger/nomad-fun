@@ -95,10 +95,3 @@
     mode: 0644
   loop: "{{ apache_vhosts | default([]) }}"
   notify: reload httpd
-
-- name: register/start httpd service
-  ansible.builtin.service:
-    name: httpd
-    enabled: True
-    state: started
-  when: not is_baking_ami
