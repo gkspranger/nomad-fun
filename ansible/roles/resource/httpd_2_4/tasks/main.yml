@@ -46,3 +46,30 @@
     group: apache
     mode: 0775
   loop: "{{ apache_vhosts | default([]) }}"
+
+- name: setup httpd/*/html root directories for vhosts
+  ansible.builtin.file:
+    path: "/home/httpd/{{ item.servername }}/html"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0775
+  loop: "{{ apache_vhosts | default([]) }}"
+
+- name: create status vhost file
+  ansible.builtin.copy:
+    content: "server available"
+    dest: "/home/httpd/{{ item.servername }}/html/status.html"
+    owner: apache
+    group: apache
+    mode: 0644
+  loop: "{{ apache_vhosts | default([]) }}"
+
+- name: setup httpd/* log directories for vhosts
+  ansible.builtin.file:
+    path: "/var/log/httpd/{{ item.servername }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0775
+  loop: "{{ apache_vhosts | default([]) }}"
