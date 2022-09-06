@@ -1,3 +1,13 @@
 ---
 
 apache_mod_ssl: True
+
+apache_vhosts:
+  - servername: "services.example.com"
+    serveralias: "services*.example.com"
+  - servername: "secure.example.com"
+    serveralias: "secure*.example.com"
+  - servername: "login.example.com"
+    serveralias: "login*.example.com"
+  - servername: "assets.example.com"
+    serveralias: "assets*.example.com"

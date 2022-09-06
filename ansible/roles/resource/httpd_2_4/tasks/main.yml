@@ -5,6 +5,24 @@
     name: httpd
     state: present
 
+- name: remove common conf.d/files
+  ansible.builtin.file:
+    path: "/etc/httpd/conf.d/{{ item }}"
+    state: absent
+  loop:
+    - autoindex.conf
+    - README
+    - userdir.conf
+    - welcome.conf
+
+- name: setup logrotate.d/httpd
+  ansible.builtin.template:
+    src: logrotate_httpd
+    dest: /etc/logrotate.d/httpd
+    owner: root
+    group: root
+    mode: 0644
+
 - name: install mod_ssl
   ansible.builtin.dnf:
     name: mod_ssl
@@ -19,3 +37,12 @@
     group: root
     mode: 0644
   when: apache_mod_ssl | default(False)
+
+- name: setup httpd/*/html directories for vhosts
+  ansible.builtin.file:
+    path: "/home/httpd/{{ item.servername }}/html"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0775
+  loop: "{{ apache_vhosts | default([]) }}"
