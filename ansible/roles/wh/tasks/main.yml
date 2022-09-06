@@ -1,0 +1,8 @@
+---
+
+- name: register/start httpd service
+  ansible.builtin.service:
+    name: httpd
+    enabled: True
+    state: started
+  when: not is_baking_ami
