@@ -7,6 +7,7 @@
   any_errors_fatal: True
   become: True
   roles:
+    - role: roles/resource/common
     - role: roles/resource/httpd_2_4
 
 - ansible.builtin.import_playbook: post_common.yml

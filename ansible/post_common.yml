@@ -5,4 +5,5 @@
   any_errors_fatal: True
   become: True
   roles:
+    - role: roles/resource/common
     - role: roles/resource/nomad
