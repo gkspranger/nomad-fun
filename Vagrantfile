@@ -60,9 +60,9 @@ Vagrant.configure("2") do |config|
     n.vm.provision "shell", inline: $server
   end
 
-  config.vm.define "client1" do |n|
+  config.vm.define "ws-client1" do |n|
     n.vm.box = "bento/rockylinux-8"
-    n.vm.hostname = "client1"
+    n.vm.hostname = "ws-client1"
 
     n.vm.provider "parallels" do |p|
       p.memory = 2048
@@ -76,9 +76,9 @@ Vagrant.configure("2") do |config|
     n.vm.provision "shell", inline: $client_ws
   end
 
-  config.vm.define "client2" do |n|
+  config.vm.define "wh-client1" do |n|
     n.vm.box = "bento/rockylinux-8"
-    n.vm.hostname = "client2"
+    n.vm.hostname = "wh-client1"
 
     n.vm.provider "parallels" do |p|
       p.memory = 2048
