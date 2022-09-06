@@ -4,3 +4,8 @@
   service:
     name: httpd
     state: reloaded
+
+- name: restart nomad
+  service:
+    name: nomad
+    state: restarted
