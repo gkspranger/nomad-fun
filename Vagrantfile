@@ -89,5 +89,6 @@ Vagrant.configure("2") do |config|
     n.vm.network "forwarded_port", guest: 4646, host: 6646
 
     n.vm.provision "shell", inline: $base
+    n.vm.provision "shell", inline: $client_wh
   end
 end
