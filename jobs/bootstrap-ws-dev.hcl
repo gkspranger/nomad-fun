@@ -27,25 +27,6 @@ job "bootstrap-ws-dev" {
   }
 
   group "bootstrap-ws-dev" {
-    task "install-ansible" {
-      lifecycle {
-        hook = "prestart"
-        sidecar = false
-      }
-
-      driver = "raw_exec"
-
-      config {
-        command = "/usr/bin/bash"
-        args    = [
-          "-c",
-          <<-EOF
-          pip3 install --user ansible-core==2.13.3
-          EOF
-        ]
-      }
-    }
-
     task "config-node" {
       driver = "raw_exec"
 
@@ -64,9 +45,8 @@ job "bootstrap-ws-dev" {
         args    = [
           "-c",
           <<-EOF
-          export PATH="/home/nomad/.local/bin:/home/nomad/bin:$PATH"
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          ansible-playbook \
+          /opt/ansible/bin/ansible-playbook \
           -i localhost, \
           ws.yml \
           -e "extravar_bootstrapping=yes" \

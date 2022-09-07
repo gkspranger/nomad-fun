@@ -45,9 +45,8 @@ job "cron-ws-dev" {
         args    = [
           "-c",
           <<-EOF
-          export PATH="/home/nomad/.local/bin:/home/nomad/bin:$PATH"
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          ansible-playbook \
+          /opt/ansible/bin/ansible-playbook \
           -i localhost, \
           ws.yml \
           -e "extravar_env=dev" \
