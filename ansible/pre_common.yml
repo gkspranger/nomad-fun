@@ -16,3 +16,4 @@
     - role: roles/resource/jq
     - role: roles/resource/mlocate
     - role: roles/resource/bash
+    - role: roles/resource/git

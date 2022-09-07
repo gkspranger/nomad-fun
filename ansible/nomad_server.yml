@@ -1,0 +1,5 @@
+---
+
+- ansible.builtin.import_playbook: pre_common.yml
+
+- ansible.builtin.import_playbook: post_common.yml

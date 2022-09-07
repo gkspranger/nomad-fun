@@ -16,14 +16,96 @@
     disablerepo: "*"
     enablerepo: hashicorp
 
-- name: setup nomad.d/nomad.hcl
+- name: install nomad autocomplete
+  shell: |
+    nomad -autocomplete-install
+  when: is_baking_ami
+
+- name: remove nomad.d/files
+  ansible.builtin.file:
+    path: "/etc/nomad.d/{{ item }}"
+    state: absent
+  loop:
+    - nomad.env
+    - nomad.hcl
+  when: is_baking_ami
+
+- name: setup nomad/* data directories
+  ansible.builtin.file:
+    path: "/opt/nomad/{{ item }}"
+    state: directory
+    owner: nomad
+    group: nomad
+    mode: 0775
+  loop:
+    - server
+    - alloc
+    - client
+    - plugins
+    - data
+  when: is_baking_ami
+
+- name: chown -R /opt/nomad dirs/files
+  ansible.builtin.file:
+    path: /opt/nomad
+    state: directory
+    owner: nomad
+    group: nomad
+    recurse: True
+  when: is_baking_ami
+
+- name: setup log/nomad.log
+  ansible.builtin.file:
+    path: /var/log/nomad.log
+    state: touch
+    owner: nomad
+    group: nomad
+    mode: 0644
+  when: is_baking_ami
+
+- name: setup sudoers.d/nomad
   ansible.builtin.template:
-    src: nomad.hcl
+    src: sudoers_nomad
+    dest: /etc/sudoers.d/nomad
+    owner: root
+    group: root
+    mode: 0640
+
+- name: setup system/nomad.service
+  ansible.builtin.template:
+    src: nomad.service
+    dest: /usr/lib/systemd/system/nomad.service
+    owner: root
+    group: root
+    mode: 0644
+  register: nomad_nomadservice_file
+
+- name: setup nomad.d/nomad.hcl client file
+  ansible.builtin.template:
+    src: nomad_client.hcl
     dest: /etc/nomad.d/nomad.hcl
     owner: root
     group: root
     mode: 0644
+  when: not nomad_is_server | default(False)
+  register: nomad_nomadhcl_file
+
+- name: setup nomad.d/nomad.hcl server file
+  ansible.builtin.template:
+    src: nomad_server.hcl
+    dest: /etc/nomad.d/nomad.hcl
+    owner: root
+    group: root
+    mode: 0644
+  when: nomad_is_server | default(False)
+  register: nomad_nomadhcl_file
+
+- name: trigger restart nomad
+  debug:
+    msg: trigger restart nomad
+  changed_when: nomad_nomadhcl_file.changed or nomad_nomadservice_file.changed
   notify: restart nomad
+  when: not is_baking_ami
 
 - name: register/start nomad service
   ansible.builtin.service:

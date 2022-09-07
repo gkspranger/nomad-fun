@@ -1,51 +1,11 @@
-$base = <<-SCRIPT
-# clean up
-yum clean all
-
-# setup hashi repo
-yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-
-# setup nomad 1
-useradd -u 5000 nomad
-
-# install packages
-dnf -y install nomad git
-
-# setup nomad 2
-nomad -autocomplete-install
-rm -fr /etc/nomad.d/*
-rm -fr /usr/lib/systemd/system/nomad.service
-mkdir -p /opt/nomad/{server,alloc,client,plugins,data}
-chown nomad:nomad /opt/nomad/*
-touch /var/log/nomad.log
-chown nomad:nomad /var/log/nomad.log
-cp /vagrant/nomad/nomad.sudoers /etc/sudoers.d/nomad
-cp /vagrant/nomad/nomad.service /etc/systemd/system/nomad.service
-SCRIPT
-
-$server = <<-SCRIPT
-cp /vagrant/nomad/nomad.server.hcl /etc/nomad.d/nomad.hcl
-systemctl daemon-reload
-systemctl start nomad.service
-SCRIPT
-
-$client_ws = <<-SCRIPT
-yum -y install python39-devel
-cp /vagrant/nomad/nomad.client_ws.hcl /etc/nomad.d/nomad.hcl
-systemctl daemon-reload
-systemctl start nomad.service
-SCRIPT
-
-$client_wh = <<-SCRIPT
-yum -y install python39-devel
-cp /vagrant/nomad/nomad.client_wh.hcl /etc/nomad.d/nomad.hcl
+$setup = <<-SCRIPT
 systemctl daemon-reload
 systemctl start nomad.service
 SCRIPT
 
 Vagrant.configure("2") do |config|
   config.vm.define "server1" do |n|
-    n.vm.box = "bento/rockylinux-8"
+    n.vm.box = "nomad-server-base"
     n.vm.hostname = "server1"
 
     n.vm.provider "parallels" do |p|
@@ -56,12 +16,11 @@ Vagrant.configure("2") do |config|
     n.vm.network :private_network, ip: "192.168.10.10"
     n.vm.network "forwarded_port", guest: 4646, host: 4646
 
-    n.vm.provision "shell", inline: $base
-    n.vm.provision "shell", inline: $server
+    n.vm.provision "shell", inline: $setup
   end
 
   config.vm.define "ws-client1" do |n|
-    n.vm.box = "bento/rockylinux-8"
+    n.vm.box = "ws-base"
     n.vm.hostname = "ws-client1"
 
     n.vm.provider "parallels" do |p|
@@ -73,12 +32,11 @@ Vagrant.configure("2") do |config|
     n.vm.network "forwarded_port", guest: 4646, host: 5646
     n.vm.network "forwarded_port", guest: 80, host: 8080
 
-    n.vm.provision "shell", inline: $base
-    n.vm.provision "shell", inline: $client_ws
+    n.vm.provision "shell", inline: $setup
   end
 
   config.vm.define "wh-client1" do |n|
-    n.vm.box = "bento/rockylinux-8"
+    n.vm.box = "wh-base"
     n.vm.hostname = "wh-client1"
 
     n.vm.provider "parallels" do |p|
@@ -90,7 +48,6 @@ Vagrant.configure("2") do |config|
     n.vm.network "forwarded_port", guest: 4646, host: 6646
     n.vm.network "forwarded_port", guest: 80, host: 9080
 
-    n.vm.provision "shell", inline: $base
-    n.vm.provision "shell", inline: $client_wh
+    n.vm.provision "shell", inline: $setup
   end
 end

@@ -9,7 +9,14 @@
     mode: 0644
   loop:
     - secure.rewrites
+  register: ws_conf_files
+
+- name: trigger reload httpd
+  debug:
+    msg: trigger reload httpd
+  changed_when: ws_conf_files.changed
   notify: reload httpd
+  when: not is_baking_ami
 
 - name: register/start httpd service
   ansible.builtin.service:

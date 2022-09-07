@@ -7,7 +7,7 @@ packer {
   }
 }
 
-source "vagrant" "rockylinux-8-ws" {
+source "vagrant" "rockylinux-8-nomad-server" {
   add_force    = true
   communicator = "ssh"
   provider     = "parallels"
@@ -15,9 +15,9 @@ source "vagrant" "rockylinux-8-ws" {
 }
 
 build {
-  name = "rockylinux-8-ws"
+  name = "rockylinux-8-nomad-server"
   sources = [
-    "source.vagrant.rockylinux-8-ws"
+    "source.vagrant.rockylinux-8-nomad-server"
   ]
 
   provisioner "shell" {
@@ -32,13 +32,13 @@ build {
 
   provisioner "ansible-local" {
     playbook_dir            = "../ansible"
-    playbook_file           = "../ansible/ws.yml"
+    playbook_file           = "../ansible/nomad_server.yml"
     command                 = "/opt/ansible/bin/ansible-playbook"
     clean_staging_directory = true
     extra_arguments = [
       "-i", "localhost,",
       "-e", "extravar_env=dev",
-      "-e", "extravar_role=ws",
+      "-e", "extravar_role=nomad_server",
       "-e", "extravar_bakingami=yes",
     ]
   }

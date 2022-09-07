@@ -84,7 +84,7 @@
   loop:
     - httpd.conf
     - security.rewrites
-  notify: reload httpd
+  register: apache_conf_files
 
 - name: setup conf.d/* config files for vhosts
   ansible.builtin.template:
@@ -94,4 +94,11 @@
     group: apache
     mode: 0644
   loop: "{{ apache_vhosts | default([]) }}"
+  register: apache_confd_files
+
+- name: trigger reload httpd
+  debug:
+    msg: trigger reload httpd
+  changed_when: apache_conf_files.changed or apache_confd_files.changed
   notify: reload httpd
+  when: not is_baking_ami

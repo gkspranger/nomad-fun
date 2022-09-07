@@ -1,3 +1,4 @@
 .vscode/
 .vagrant/
 .DS_Store
+output-rockylinux-8-*/
