@@ -92,24 +92,13 @@
     mode: 0644
   register: nomad_nomadservice_file
 
-- name: setup nomad.d/nomad.hcl client file
+- name: setup nomad.d/nomad.hcl file
   ansible.builtin.template:
-    src: nomad_client.hcl
+    src: nomad.hcl
     dest: /etc/nomad.d/nomad.hcl
-    owner: root
-    group: root
+    owner: nomad
+    group: nomad
     mode: 0644
-  when: not nomad_is_server | default(False)
-  register: nomad_nomadhcl_file
-
-- name: setup nomad.d/nomad.hcl server file
-  ansible.builtin.template:
-    src: nomad_server.hcl
-    dest: /etc/nomad.d/nomad.hcl
-    owner: root
-    group: root
-    mode: 0644
-  when: nomad_is_server | default(False)
   register: nomad_nomadhcl_file
 
 - name: trigger restart nomad

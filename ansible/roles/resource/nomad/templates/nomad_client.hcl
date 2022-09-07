@@ -1,5 +1,3 @@
-// {{ config_managed }}
-
 log_level = "DEBUG"
 log_file  = "/var/log/nomad.log"
 data_dir  = "/opt/nomad"
