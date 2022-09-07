@@ -1,5 +1,18 @@
 ---
 
+- name: setup nomad group
+  ansible.builtin.group:
+    name: nomad
+    state: present
+    gid: 5000
+
+- name: setup nomad user
+  ansible.builtin.user:
+    name: nomad
+    uid: 5000
+    group: nomad
+    state: present
+
 - name: install hashicorp repo
   ansible.builtin.yum_repository:
     name: hashicorp
@@ -43,7 +56,6 @@
     - client
     - plugins
     - data
-  when: is_baking_ami
 
 - name: chown -R /opt/nomad dirs/files
   ansible.builtin.file:
