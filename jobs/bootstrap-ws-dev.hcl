@@ -32,6 +32,16 @@ job "bootstrap-ws-dev" {
 
       artifact {
         source = "git::https://github.com/gkspranger/nomad-fun"
+        destination = "local/varrepo"
+
+        options {
+          ref = "main"
+          depth = 1
+        }
+      }
+
+      artifact {
+        source = "git::https://github.com/gkspranger/nomad-fun"
         destination = "local/repo"
 
         options {
@@ -46,6 +56,7 @@ job "bootstrap-ws-dev" {
           "-c",
           <<-EOF
           cd ${NOMAD_TASK_DIR}/repo/ansible
+          cp ${NOMAD_TASK_DIR}/varrepo/external/ps_vars.yml .
           /opt/ansible/bin/ansible-playbook \
           -i localhost, \
           ws.yml \
