@@ -32,6 +32,16 @@ job "cron-wh-dev" {
 
       artifact {
         source = "git::https://github.com/gkspranger/nomad-fun"
+        destination = "local/varrepo"
+
+        options {
+          ref = "main"
+          depth = 1
+        }
+      }
+
+      artifact {
+        source = "git::https://github.com/gkspranger/nomad-fun"
         destination = "local/repo"
 
         options {
@@ -45,9 +55,9 @@ job "cron-wh-dev" {
         args    = [
           "-c",
           <<-EOF
-          export PATH="/home/nomad/.local/bin:/home/nomad/bin:$PATH"
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          ansible-playbook \
+          cp ${NOMAD_TASK_DIR}/varrepo/external/ps_vars.yml .
+          /opt/ansible/bin/ansible-playbook \
           -i localhost, \
           wh.yml \
           -e "extravar_env=dev" \
