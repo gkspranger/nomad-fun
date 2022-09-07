@@ -5,7 +5,3 @@
 {% else %}
 {{ lookup("template", "roles/resource/nomad/templates/nomad_client.hcl") }}
 {% endif %}
-
-
-
-
