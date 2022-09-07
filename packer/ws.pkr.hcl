@@ -22,8 +22,8 @@ build {
 
   provisioner "shell" {
     inline = [
-      // "sudo yum clean all",
-      // "sudo yum -y update",
+      "sudo yum clean all",
+      "sudo yum -y update",
       "sudo yum -y install python39-devel",
       "sudo python3 -m venv /opt/ansible",
       "sudo /opt/ansible/bin/pip3 install ansible-core==2.13.3",
