@@ -1,5 +1,9 @@
 ---
 
+- name: show what the heck is going on
+  shell: |
+    whoami
+
 - name: install development tools
   ansible.builtin.dnf:
     name: "@Development tools"
