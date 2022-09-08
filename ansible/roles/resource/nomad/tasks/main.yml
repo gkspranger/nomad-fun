@@ -92,6 +92,11 @@
     mode: 0644
   register: nomad_nomadservice_file
 
+- name: force systemd reload when service file changes
+  ansible.builtin.systemd:
+    daemon_reload: True
+  when: nomad_nomadservice_file.changed
+
 - name: setup nomad.d/nomad.hcl file
   ansible.builtin.template:
     src: nomad.hcl

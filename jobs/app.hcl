@@ -68,7 +68,6 @@ job "helloworld" {
           python3 -m venv $tmp_dir
           $tmp_dir/bin/pip3 install -r requirements.txt
           $tmp_dir/bin/python3 app.py
-          rm -fr $tmp_dir
           EOF
         ]
       }
