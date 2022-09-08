@@ -4,4 +4,5 @@
   ansible.builtin.dnf:
     name: "@Development tools"
     state: present
+  become_user: root
   become: True
