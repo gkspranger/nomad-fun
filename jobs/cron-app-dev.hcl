@@ -29,6 +29,7 @@ job "cron-app-dev" {
   group "cron-app-dev" {
     task "config-node" {
       driver = "raw_exec"
+      user = "nomad"
 
       artifact {
         source = "git::https://github.com/gkspranger/nomad-fun"
@@ -50,13 +51,18 @@ job "cron-app-dev" {
         }
       }
 
+      env {
+        DEFAULT_LOCAL_TMP = "/home/nomad/.ansible/tmp/"
+        ANSIBLE_LOCAL_TMP = "/home/nomad/.ansible/tmp/"
+      }
+
       config {
         command = "/usr/bin/bash"
         args    = [
           "-c",
           <<-EOF
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          cp ${NOMAD_TASK_DIR}/varrepo/external/ps_vars.yml tmp/.
+          sudo cp ${NOMAD_TASK_DIR}/varrepo/external/ps_vars.yml tmp/.
           /opt/ansible/bin/ansible-playbook \
           -i localhost, \
           app.yml \
