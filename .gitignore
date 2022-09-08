@@ -3,3 +3,4 @@
 .DS_Store
 output-rockylinux-8-*/
 ansible/tmp/*.yml
+venv
