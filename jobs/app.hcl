@@ -39,8 +39,8 @@ job "helloworld" {
         memory = 128
       }
 
-      driver = "exec"
-      // user = "app"
+      driver = "raw_exec"
+      user = "app"
 
       env {
         APP_PORT = "${NOMAD_PORT_http}"
@@ -64,8 +64,11 @@ job "helloworld" {
           <<-EOF
           set -eu
           cd ${NOMAD_TASK_DIR}/repo/app
-          pip3 install -r requirements.txt
-          python3 app.py
+          tmp_dir=$(mktemp -d -p /home/app -t venv-${NOMAD_JOB_NAME}-XXXXXXXXXX)
+          python3 -m venv $tmp_dir
+          $tmp_dir/bin/pip3 install -r requirements.txt
+          $tmp_dir/bin/python3 app.py
+          rm -fr $tmp_dir
           EOF
         ]
       }
