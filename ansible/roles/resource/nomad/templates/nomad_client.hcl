@@ -22,4 +22,14 @@ client {
     role = "{{ extravar_role }}"
     env = "{{ extravar_env }}"
   }
+
+  chroot_env {
+    "/bin" = "/bin"
+    "/etc" = "/etc"
+    "/lib" = "/lib"
+    "/lib64" = "/lib64"
+    "/sbin" = "/sbin"
+    "/usr" = "/usr"
+    "/opt/ansible" = "/opt/ansible"
+  }
 }

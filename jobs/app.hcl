@@ -21,7 +21,7 @@ job "helloworld" {
   }
 
   group "helloworld" {
-    count = 1
+    count = 3
 
     network {
       port "http" {}
