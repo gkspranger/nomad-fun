@@ -22,6 +22,10 @@ vagrant box add --force ws-base output-rockylinux-8-ws/package.box
 # build wh node and box add
 packer build -force wh.pkr.hcl
 vagrant box add --force wh-base output-rockylinux-8-wh/package.box
+
+# build app node and box add
+packer build -force app.pkr.hcl
+vagrant box add --force app-base output-rockylinux-8-app/package.box
 ```
 
 ## Vagrant
@@ -34,6 +38,9 @@ vagrant up ws-client1
 
 # stand up wh node
 vagrant up wh-client1
+
+# stand up app node
+vagrant up app-client1
 ```
 
 ## Nomad
@@ -49,4 +56,10 @@ nomad job plan bootstrap-wh-dev.hcl
 nomad job plan cron-wh-dev.hcl
 nomad job run bootstrap-wh-dev.hcl
 nomad job run cron-wh-dev.hcl
+
+# plan and run app bootstrap and cron job
+nomad job plan bootstrap-app-dev.hcl
+nomad job plan cron-app-dev.hcl
+nomad job run bootstrap-app-dev.hcl
+nomad job run cron-app-dev.hcl
 ```

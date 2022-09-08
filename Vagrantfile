@@ -50,4 +50,19 @@ Vagrant.configure("2") do |config|
 
     n.vm.provision "shell", inline: $setup
   end
+
+  config.vm.define "app-client1" do |n|
+    n.vm.box = "app-base"
+    n.vm.hostname = "app-client1"
+
+    n.vm.provider "parallels" do |p|
+      p.memory = 2048
+      p.cpus = 1
+    end
+
+    n.vm.network :private_network, ip: "192.168.10.40"
+    n.vm.network "forwarded_port", guest: 4646, host: 7646
+
+    n.vm.provision "shell", inline: $setup
+  end
 end
