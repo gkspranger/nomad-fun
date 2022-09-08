@@ -40,7 +40,7 @@ job "helloworld" {
       }
 
       driver = "raw_exec"
-      user = "app"
+      // user = "app"
 
       env {
         APP_PORT = "${NOMAD_PORT_http}"
@@ -64,10 +64,10 @@ job "helloworld" {
           <<-EOF
           set -eu
           cd ${NOMAD_TASK_DIR}/repo/app
-          tmp_dir=$(mktemp -d -p /home/app -t venv-${NOMAD_JOB_NAME}-XXXXXXXXXX)
-          python3 -m venv $tmp_dir
-          $tmp_dir/bin/pip3 install -r requirements.txt
-          $tmp_dir/bin/python3 app.py
+          tmp_dir=$(sudo -E -u app mktemp -d -p /home/app -t venv-${NOMAD_JOB_NAME}-XXXXXXXXXX)
+          sudo -E -u app python3 -m venv $tmp_dir
+          sudo -E -u app $tmp_dir/bin/pip3 install -r requirements.txt
+          sudo -E -u app $tmp_dir/bin/python3 app.py
           EOF
         ]
       }
