@@ -4,3 +4,4 @@
   ansible.builtin.dnf:
     name: "@Development tools"
     state: present
+  become: True
