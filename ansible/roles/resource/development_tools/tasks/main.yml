@@ -1,8 +1,13 @@
 ---
 
 - name: show what the heck is going on
-  shell: |
-    whoami
+  ansible.builtin.shell:
+    cmd: |
+      whoami
+  register: shellout
+
+- debug:
+    var: shellout
 
 - name: install development tools
   ansible.builtin.dnf:
