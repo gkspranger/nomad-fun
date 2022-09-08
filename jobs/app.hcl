@@ -39,7 +39,8 @@ job "helloworld" {
         memory = 128
       }
 
-      driver = "raw_exec"
+      driver = "exec"
+      // user = "app"
 
       env {
         APP_PORT = "${NOMAD_PORT_http}"
@@ -61,14 +62,13 @@ job "helloworld" {
         args    = [
           "-c",
           <<-EOF
+          set -eu
           cd ${NOMAD_TASK_DIR}/repo/app
-          python3 -m venv venv
-          ./venv/bin/pip3 install -r requirements.txt
-          ./venv/bin/python3 app.py
+          pip3 install -r requirements.txt
+          python3 app.py
           EOF
         ]
       }
-
     }
   }
 }
