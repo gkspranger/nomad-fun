@@ -1,6 +1,7 @@
 ---
 
 all_roles:
+  - app
   - nomad_server
   - wh
   - ws

@@ -1,0 +1,14 @@
+---
+
+- name: setup app group
+  ansible.builtin.group:
+    name: app
+    state: present
+    gid: 6000
+
+- name: setup app user
+  ansible.builtin.user:
+    name: app
+    uid: 6000
+    group: app
+    state: present
