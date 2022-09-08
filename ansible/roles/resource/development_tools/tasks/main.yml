@@ -1,14 +1,5 @@
 ---
 
-- name: show what the heck is going on
-  ansible.builtin.shell:
-    cmd: |
-      whoami
-  register: shellout
-
-- debug:
-    var: shellout
-
 - name: install development tools
   ansible.builtin.dnf:
     name: "@Development tools"

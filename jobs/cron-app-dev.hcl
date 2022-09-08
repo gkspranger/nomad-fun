@@ -62,7 +62,7 @@ job "cron-app-dev" {
           "-c",
           <<-EOF
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          sudo cp ${NOMAD_TASK_DIR}/varrepo/external/ps_vars.yml tmp/.
+          cp ${NOMAD_TASK_DIR}/varrepo/external/ps_vars.yml tmp/.
           /opt/ansible/bin/ansible-playbook \
           -i localhost, \
           app.yml \
