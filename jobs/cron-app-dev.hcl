@@ -29,7 +29,6 @@ job "cron-app-dev" {
   group "cron-app-dev" {
     task "config-node" {
       driver = "raw_exec"
-      // user = "ansible"
 
       artifact {
         source = "git::https://github.com/gkspranger/nomad-fun"
