@@ -58,7 +58,7 @@
 
 - name: create html/status.html files for vhosts
   ansible.builtin.copy:
-    content: "{{ item.servername }} server available"
+    content: "{{ extravar_role | upper }} {{ item.servername }} server available"
     dest: "/home/httpd/{{ item.servername }}/html/status.html"
     owner: apache
     group: apache
