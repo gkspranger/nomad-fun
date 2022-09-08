@@ -10,6 +10,7 @@
     - role: roles/action/assert
     - role: roles/action/setup
     - role: roles/resource/common
+    - role: roles/resource/ansible
     - role: roles/resource/dnf
     - role: roles/resource/development_tools
     - role: roles/resource/netcat
