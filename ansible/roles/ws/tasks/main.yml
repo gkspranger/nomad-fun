@@ -11,6 +11,18 @@
     - secure.rewrites
   register: ws_conf_files
 
+- block:
+    - name: get hello-app services
+      ansible.builtin.uri:
+        url: http://localhost:4646/v1/service/hello-app
+        return_content: True
+      register: hello_app_services
+
+    - name: show hello-app services
+      debug:
+        var: hello_app_services
+  ignore_errors: True
+
 - name: trigger reload httpd
   debug:
     msg: trigger reload httpd
