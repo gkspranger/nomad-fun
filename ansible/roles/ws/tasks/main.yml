@@ -1,16 +1,5 @@
 ---
 
-- name: setup conf/* rewrite files
-  ansible.builtin.template:
-    src: "{{ item }}"
-    dest: "/etc/httpd/conf/{{ item }}"
-    owner: root
-    group: root
-    mode: 0644
-  loop:
-    - secure.rewrites.conf
-  register: ws_conf_files
-
 - name: get hello-app services
   ansible.builtin.uri:
     url: http://localhost:4646/v1/service/hello-app
@@ -21,6 +10,17 @@
 - name: set hello_app_services variable
   set_fact:
     hello_app_services: "{{ hello_app_services_uri.json | default([]) }}"
+
+- name: setup conf/* rewrite files
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/etc/httpd/conf/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - secure.rewrites.conf
+  register: ws_conf_files
 
 - name: trigger reload httpd
   debug:
