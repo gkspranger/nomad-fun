@@ -29,7 +29,6 @@ job "cron-app-dev" {
   group "cron-app-dev" {
     task "config-node" {
       driver = "raw_exec"
-      user = "nomad"
 
       artifact {
         source = "git::https://github.com/gkspranger/nomad-fun"
@@ -49,11 +48,6 @@ job "cron-app-dev" {
           ref = "main"
           depth = 1
         }
-      }
-
-      env {
-        DEFAULT_LOCAL_TMP = "/home/nomad/.ansible/tmp/"
-        ANSIBLE_LOCAL_TMP = "/home/nomad/.ansible/tmp/"
       }
 
       config {
