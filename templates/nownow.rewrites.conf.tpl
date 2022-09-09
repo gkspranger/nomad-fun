@@ -6,6 +6,8 @@ ProxyHCExpr ok200 {%{REQUEST_STATUS} =~ /^200/}
 {{ else }}
   BalancerMember http://localhost:65535
 {{ end }}
+  ProxySet lbmethod=bytraffic
+</Proxy>
 
 ProxyPass /app balancer://hello-app
 ProxyPassReverse /app balancer://hello-app
