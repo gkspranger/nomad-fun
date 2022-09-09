@@ -22,11 +22,6 @@ job "wh-rewrites" {
   }
 
   group "wh-rewrites" {
-    reschedule {
-      attempts  = 0
-      unlimited = false
-    }
-
     task "rewrite-node" {
       driver = "raw_exec"
 
