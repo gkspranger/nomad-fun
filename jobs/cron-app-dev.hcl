@@ -27,6 +27,11 @@ job "cron-app-dev" {
   }
 
   group "cron-app-dev" {
+    reschedule {
+      attempts  = 0
+      unlimited = false
+    }
+
     task "config-node" {
       driver = "raw_exec"
 

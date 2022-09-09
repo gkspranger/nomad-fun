@@ -27,6 +27,11 @@ job "cron-wh-dev" {
   }
 
   group "cron-wh-dev" {
+    reschedule {
+      attempts  = 0
+      unlimited = false
+    }
+
     task "config-node" {
       driver = "raw_exec"
 
