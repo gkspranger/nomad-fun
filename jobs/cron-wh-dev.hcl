@@ -55,11 +55,11 @@ job "cron-wh-dev" {
         }
       }
 
-      template {
-        source        = "local/repo/templates/nownow.rewrites.conf.tpl"
-        destination   = "/etc/httpd/conf/nownow.rewrites.conf"
-        change_mode   = "noop"
-      }
+      // template {
+      //   source        = "local/repo/templates/nownow.rewrites.conf.tpl"
+      //   destination   = "/etc/httpd/conf/nownow.rewrites.conf"
+      //   change_mode   = "noop"
+      // }
 
       config {
         command = "/usr/bin/bash"

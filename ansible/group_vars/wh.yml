@@ -1,5 +1,7 @@
 ---
 
+apache_is_server: True
+
 apache_mod_ssl: True
 
 apache_vhosts:

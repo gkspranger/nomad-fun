@@ -22,4 +22,11 @@ client {
     role = "{{ extravar_role }}"
     env = "{{ extravar_env }}"
   }
+
+  {% if apache_is_server | default(False) %}
+  host_volume "etc-httpd-conf" {
+    path = "/etc/httpd/conf"
+    read_only = false
+  }
+  {% endif %}
 }
