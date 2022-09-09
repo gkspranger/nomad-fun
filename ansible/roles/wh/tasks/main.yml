@@ -8,8 +8,18 @@
     group: root
     mode: 0644
   loop:
-    - now.rewrites
+    - now.rewrites.conf
   register: wh_conf_files
+
+- name: touch rewrite files
+  ansible.builtin.file:
+    dest: "/etc/httpd/conf/{{ item }}"
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - nownow.rewrites.conf
 
 - name: trigger reload httpd
   debug:
