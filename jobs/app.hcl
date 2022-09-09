@@ -27,12 +27,6 @@ job "helloworld" {
       port "http" {}
     }
 
-    service {
-      name     = "hello-app"
-      port     = "http"
-      provider = "nomad"
-    }
-
     task "helloworld" {
       resources {
         cpu    = 50
@@ -40,6 +34,25 @@ job "helloworld" {
       }
 
       driver = "exec"
+
+      service {
+        name     = "hello-app"
+        port     = "http"
+        provider = "nomad"
+
+        check {
+          type     = "http"
+          name     = "hello_app_health"
+          path     = "/healthz"
+          interval = "10s"
+          timeout  = "5s"
+
+          check_restart {
+            limit = 6
+            grace = "60s"
+          }
+        }
+      }
 
       env {
         APP_PORT = "${NOMAD_PORT_http}"
