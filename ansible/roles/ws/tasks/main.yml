@@ -8,7 +8,7 @@
     group: root
     mode: 0644
   loop:
-    - secure.rewrites
+    - secure.rewrites.conf
   register: ws_conf_files
 
 - name: get hello-app services
@@ -21,10 +21,6 @@
 - name: set hello_app_services variable
   set_fact:
     hello_app_services: "{{ hello_app_services_uri.json | default([]) }}"
-
-- name: show hello-app services
-  debug:
-    var: hello_app_services
 
 - name: trigger reload httpd
   debug:
