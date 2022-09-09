@@ -39,19 +39,6 @@ job "helloworld" {
         name     = "hello-app"
         port     = "http"
         provider = "nomad"
-
-        check {
-          type     = "http"
-          name     = "hello_app_health"
-          path     = "/healthz"
-          interval = "10s"
-          timeout  = "5s"
-
-          check_restart {
-            limit = 6
-            grace = "60s"
-          }
-        }
       }
 
       env {
