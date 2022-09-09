@@ -1,16 +1,11 @@
-{{ range nomadService "hello-app" }}
-  server {{ .Address }}:{{ .Port }};
-{{ else }}server 127.0.0.1:65535; # force a 502
-{{ end }}
+ProxyHCExpr ok200 {%{REQUEST_STATUS} =~ /^200/}
 
-# ProxyHCExpr ok200 {%{REQUEST_STATUS} =~ /^200/}
-
-# <Proxy balancer://hello-app>
+<Proxy balancer://hello-app>
 {{ range nomadService "hello-app" }}
-  # BalancerMember http://{{ .Address }}:{{ .Port }} hcmethod=GET hcexpr=ok200 hcuri=/healthz hcinterval=5 hcpasses=2 hcfails=6
+  BalancerMember http://{{ .Address }}:{{ .Port }} hcmethod=GET hcexpr=ok200 hcuri=/healthz hcinterval=5 hcpasses=2 hcfails=6
 {{ else }}
-  # BalancerMember http://localhost:65535
+  BalancerMember http://localhost:65535
 {{ end }}
 
-# ProxyPass /app balancer://hello-app
-# ProxyPassReverse /app balancer://hello-app
+ProxyPass /app balancer://hello-app
+ProxyPassReverse /app balancer://hello-app
