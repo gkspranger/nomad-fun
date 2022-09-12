@@ -75,3 +75,21 @@ nomad job plan app.hcl
 nomad job scale hello world 5
 nomad job scale hello world 1
 ```
+
+## Agenda
+- show packer
+- show vagrant using packer images
+
+- show nomad raw
+- show nomad in bootstrap mode
+- show nomad in cron mode
+
+- show nomad service discovery in ansible (ws)
+- show nomad service discovery via ansible/golang template mix (wh)
+- show nomad service discovery as it should be (nweb)
+
+## Cons
+- nomad not secure by default (mTLS, ACLs)
+- only recent idea of deploying job with secrets
+- golang templates hurt a little
+- overkill for config mgmt ?? but what if ..
