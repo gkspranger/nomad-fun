@@ -26,6 +26,10 @@ vagrant box add --force wh-base output-rockylinux-8-wh/package.box
 # build app node and box add
 packer build -force app.pkr.hcl
 vagrant box add --force app-base output-rockylinux-8-app/package.box
+
+# build nweb node and box add
+packer build -force nweb.pkr.hcl
+vagrant box add --force nweb-base output-rockylinux-8-nweb/package.box
 ```
 
 ## Vagrant

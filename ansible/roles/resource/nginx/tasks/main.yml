@@ -1,0 +1,23 @@
+---
+
+- name: install nginx repo
+  ansible.builtin.yum_repository:
+    name: nginx
+    description: Nginx - $basearch
+    baseurl: https://nginx.org/packages/centos/$releasever/$basearch/
+    gpgcheck: False
+    enabled: False
+
+- name: install nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+    disablerepo: "*"
+    enablerepo: nginx
+
+- name: remove common conf.d/files
+  ansible.builtin.file:
+    path: "/etc/nginx/conf.d/{{ item }}"
+    state: absent
+  loop:
+    - default.conf

@@ -33,6 +33,7 @@
   shell: |
     nomad -autocomplete-install
   when: is_baking_ami
+  ignore_errors: True
 
 - name: remove nomad.d/files
   ansible.builtin.file:
@@ -95,6 +96,7 @@
 - name: force systemd reload when service file changes
   ansible.builtin.systemd:
     daemon_reload: True
+  changed_when: nomad_nomadservice_file.changed
   when: nomad_nomadservice_file.changed
 
 - name: setup nomad.d/nomad.hcl file

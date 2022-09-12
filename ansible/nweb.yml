@@ -1,0 +1,14 @@
+---
+
+- ansible.builtin.import_playbook: pre_common.yml
+
+- hosts: localhost
+  connection: local
+  any_errors_fatal: True
+  become: True
+  roles:
+    - role: roles/resource/common
+    - role: roles/resource/nginx
+    - role: roles/nweb
+
+- ansible.builtin.import_playbook: post_common.yml

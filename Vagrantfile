@@ -65,4 +65,17 @@ Vagrant.configure("2") do |config|
 
     n.vm.provision "shell", inline: $setup
   end
+
+  config.vm.define "nweb-client1" do |n|
+    n.vm.box = "bento/rockylinux-8"
+    n.vm.hostname = "nweb-client1"
+
+    n.vm.provider "parallels" do |p|
+      p.memory = 2048
+      p.cpus = 1
+    end
+
+    n.vm.network :private_network, ip: "192.168.10.50"
+    n.vm.network "forwarded_port", guest: 4646, host: 8646
+  end
 end
