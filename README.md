@@ -48,22 +48,30 @@ vagrant up app-client1
 ```
 
 ## Nomad
+### Deploying Config Mgmt
 ```bash
 # plan and run ws bootstrap and cron job
 nomad job plan bootstrap-ws-dev.hcl
 nomad job plan cron-ws-dev.hcl
+
 nomad job run bootstrap-ws-dev.hcl
 nomad job run cron-ws-dev.hcl
 
-# plan and run wh bootstrap and cron job
-nomad job plan bootstrap-wh-dev.hcl
-nomad job plan cron-wh-dev.hcl
+...
+
 nomad job run bootstrap-wh-dev.hcl
 nomad job run cron-wh-dev.hcl
-
-# plan and run app bootstrap and cron job
-nomad job plan bootstrap-app-dev.hcl
-nomad job plan cron-app-dev.hcl
 nomad job run bootstrap-app-dev.hcl
 nomad job run cron-app-dev.hcl
+nomad job run bootstrap-nweb-dev.hcl
+nomad job run cron-nweb-dev.hcl
+```
+
+### Deploying and Scaling an App
+```bash
+# run ptyhon app
+nomad job plan app.hcl
+
+nomad job scale hello world 5
+nomad job scale hello world 1
 ```
