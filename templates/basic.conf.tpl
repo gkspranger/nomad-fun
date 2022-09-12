@@ -1,4 +1,18 @@
-# {{ env "NWEB_ENV" }}
+# env: {{ env "NWEB_ENV" }}
+# role: {{ env "NWEB_ROLE" }}
+
+{{ $env := env "NWEB_ENV" }}
+
+{{ if eq $env "dev" }}
+  {{ $suffix := "-d" }}
+{{ else if eq $env "stage" }}
+  {{ $suffix := "-s" }}
+{{ else if eq $env "pi" }}
+  {{ $suffix := "-pi" }}
+{{ else if eq $env "prod" }}
+  {{ $suffix := "" }}
+{{ end }}
+
 
 upstream backend {
 {{ range nomadService "hello-app" }}
@@ -9,6 +23,9 @@ upstream backend {
 
 server {
    listen 8080;
+
+  rewrite ^/rewrite{{ $suffix }}$ https://spranger.us last;
+
    location / {
       proxy_pass http://backend;
    }

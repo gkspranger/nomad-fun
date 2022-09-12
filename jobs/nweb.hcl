@@ -54,6 +54,7 @@ job "nweb" {
 
       env {
         NWEB_ENV = "${meta.env}"
+        NWEB_ROLE = "${meta.role}"
       }
 
       template {
