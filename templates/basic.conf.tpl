@@ -11,6 +11,8 @@
   {{ $suffix := "-pi" }}
 {{ else if eq $env "prod" }}
   {{ $suffix := "" }}
+{{ else  }}
+  {{ $suffix := "nada" }}
 {{ end }}
 
 
