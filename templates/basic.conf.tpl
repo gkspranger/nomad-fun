@@ -1,3 +1,5 @@
+# {{envOrKey "NWEB_ENV"}}
+
 upstream backend {
 {{ range nomadService "hello-app" }}
   server {{ .Address }}:{{ .Port }};
