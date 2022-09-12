@@ -1,4 +1,0 @@
-- name: uninstall java
-  ansible.builtin.dnf:
-    name: java-1.8.0-openjdk-headless
-    state: absent

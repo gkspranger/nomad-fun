@@ -1,6 +1,0 @@
----
-
-- name: install development tools
-  ansible.builtin.dnf:
-    name: "@Development tools"
-    state: present

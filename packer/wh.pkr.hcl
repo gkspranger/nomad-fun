@@ -20,13 +20,6 @@ build {
     "source.vagrant.rockylinux-8-wh"
   ]
 
-  provisioner "shell-local" {
-    inline = [
-      "rm -fr ../ansible/tmp/*",
-      "cp ../external/ps_vars.yml ../ansible/tmp/.",
-    ]
-  }
-
   provisioner "shell" {
     inline = [
       "sudo yum clean all",

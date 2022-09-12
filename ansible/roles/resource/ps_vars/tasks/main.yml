@@ -9,5 +9,10 @@
 
 - name: include ps vars
   ansible.builtin.include_vars:
-    file: tmp/ps_vars/external/ps_vars/main.yml
+    file: ./tmp/ps_vars/external/ps_vars/main.yml
     name: ps_vars
+
+- name: drop ps vars checkout
+  ansible.builtin.file:
+    path: ./tmp/ps_vars
+    state: absent
