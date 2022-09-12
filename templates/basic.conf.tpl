@@ -1,4 +1,4 @@
-# {{envOrKey "NWEB_ENV"}}
+# {{ getenv "NWEB_ENV" "thisisthedefault" }}
 
 upstream backend {
 {{ range nomadService "hello-app" }}
