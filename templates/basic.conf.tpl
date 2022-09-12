@@ -3,18 +3,16 @@
 
 {{ $env := env "NWEB_ENV" }}
 
+{{ $suffix := "failure" }}
 {{ if eq $env "dev" }}
-  {{ $suffix := "-d" }}
+  {{ $suffix = "-d" }}
 {{ else if eq $env "stage" }}
-  {{ $suffix := "-s" }}
+  {{ $suffix = "-s" }}
 {{ else if eq $env "pi" }}
-  {{ $suffix := "-pi" }}
+  {{ $suffix = "-pi" }}
 {{ else if eq $env "prod" }}
-  {{ $suffix := "" }}
-{{ else  }}
-  {{ $suffix := "nada" }}
+  {{ $suffix = "" }}
 {{ end }}
-
 
 upstream backend {
 {{ range nomadService "hello-app" }}
