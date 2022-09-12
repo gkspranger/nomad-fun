@@ -5,3 +5,9 @@
     repo: https://github.com/gkspranger/nomad-fun.git
     dest: ./tmp/ps_vars
     version: main
+    depth: 1
+
+- name: include ps vars
+  ansible.builtin.include_vars:
+    file: tmp/ps_vars/external/ps_vars/main.yml
+    name: ps_vars

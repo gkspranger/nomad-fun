@@ -8,6 +8,7 @@
   become: True
   roles:
     - role: roles/resource/common
+    - role: roles/resource/ps_vars
     - role: roles/resource/nginx
     - role: roles/nweb
 

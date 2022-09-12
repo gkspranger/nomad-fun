@@ -2,8 +2,6 @@
 
 - hosts: localhost
   connection: local
-  vars_files:
-    - tmp/ps_vars.yml
   any_errors_fatal: True
   become: True
   roles:

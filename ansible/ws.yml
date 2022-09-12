@@ -4,12 +4,11 @@
 
 - hosts: localhost
   connection: local
-  vars_files:
-    - tmp/ps_vars.yml
   any_errors_fatal: True
   become: True
   roles:
     - role: roles/resource/common
+    - role: roles/resource/ps_vars
     - role: roles/resource/httpd_2_4
     - role: roles/ws
 
