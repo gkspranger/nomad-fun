@@ -1,0 +1,4 @@
+---
+
+ws_redirect_login:
+  dev: True

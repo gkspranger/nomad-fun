@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "nweb-client1" do |n|
-    n.vm.box = "bento/rockylinux-8"
+    n.vm.box = "nweb-base"
     n.vm.hostname = "nweb-client1"
 
     n.vm.provider "parallels" do |p|
