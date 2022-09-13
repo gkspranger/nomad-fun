@@ -2,6 +2,7 @@
 
 all_roles:
   - app
+  - hweb
   - nomad_server
   - nweb
   - wh

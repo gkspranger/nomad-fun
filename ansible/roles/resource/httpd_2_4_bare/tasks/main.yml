@@ -1,0 +1,41 @@
+---
+
+- name: install httpd 2.4
+  ansible.builtin.dnf:
+    name: httpd
+    state: present
+
+- name: remove common conf.d/files
+  ansible.builtin.file:
+    path: "/etc/httpd/conf.d/{{ item }}"
+    state: absent
+  loop:
+    - autoindex.conf
+    - README
+    - userdir.conf
+    - welcome.conf
+
+- name: install mod_ssl
+  ansible.builtin.dnf:
+    name: mod_ssl
+    state: present
+
+- name: create dummy ssl vhost file
+  ansible.builtin.copy:
+    content: "# {{ config_managed }}"
+    dest: /etc/httpd/conf.d/ssl.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: setup conf/* config/rewrite files
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/etc/httpd/conf/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - httpd.conf
+    - security.rewrites
+  register: apache_conf_files
