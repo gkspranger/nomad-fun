@@ -47,6 +47,11 @@ job "hweb" {
         }
       }
 
+      env {
+        HWEB_ENV = "${meta.env}"
+        HWEB_ROLE = "${meta.role}"
+      }
+
       config {
         command = "/usr/bin/bash"
         args    = [
@@ -56,6 +61,7 @@ job "hweb" {
           mkdir -p /local/cgi-bin
           mkdir -p /local/html
           mkdir -p /local/logs
+          mkdir -p /run/httpd
           apachectl configtest
           /usr/sbin/httpd -f /etc/httpd/conf/httpd.conf -DFOREGROUND
           EOF
