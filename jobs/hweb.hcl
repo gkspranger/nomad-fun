@@ -84,7 +84,7 @@ job "hweb" {
 
       template {
         source        = "local/repo/templates/httpd/hweb/bottom.rewrites.conf"
-        destination   = "/etc/httpd/confd/bottom.rewrites.conf"
+        destination   = "/etc/httpd/conf/bottom.rewrites.conf"
         change_mode   = "signal"
         change_signal = "SIGHUP"
       }
