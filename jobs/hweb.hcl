@@ -37,6 +37,16 @@ job "hweb" {
     task "httpd" {
       driver = "exec"
 
+      artifact {
+        source = "git::https://github.com/gkspranger/nomad-fun"
+        destination = "local/repo"
+
+        options {
+          ref = "main"
+          depth = 1
+        }
+      }
+
       config {
         command = "/usr/bin/bash"
         args    = [
@@ -59,31 +69,29 @@ job "hweb" {
       }
 
       template {
-        data = <<EOF
-<VirtualHost *:10000>
+        source        = "local/repo/templates/httpd/httpd.conf"
+        destination   = "/etc/httpd/confd/httpd.conf"
+        change_mode   = "signal"
+        change_signal = "SIGHUP"
+      }
 
-ServerName greggy
-ServerAlias greggy
+      template {
+        source        = "local/repo/templates/httpd/security.rewrites.conf"
+        destination   = "/etc/httpd/confd/security.rewrites.conf"
+        change_mode   = "signal"
+        change_signal = "SIGHUP"
+      }
 
-DocumentRoot /local/html
+      template {
+        source        = "local/repo/templates/httpd/hweb/bottom.rewrites.conf"
+        destination   = "/etc/httpd/confd/bottom.rewrites.conf"
+        change_mode   = "signal"
+        change_signal = "SIGHUP"
+      }
 
-<Directory "/local/html">
-Options IncludesNoExec
-
-Require all granted
-
-AddDefaultCharset UTF-8
-</Directory>
-
-DirectoryIndex index.html
-
-CustomLog /dev/stdout combinedio
-ErrorLog /dev/stderr
-
-</VirtualHost>
-EOF
-
-        destination   = "/etc/httpd/conf.d/hweb.conf"
+      template {
+        source        = "local/repo/templates/httpd/hweb/greggy.conf"
+        destination   = "/etc/httpd/conf.d/greggy.conf"
         change_mode   = "signal"
         change_signal = "SIGHUP"
       }
