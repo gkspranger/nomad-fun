@@ -76,17 +76,17 @@ nomad job scale hello world 5
 nomad job scale hello world 1
 ```
 
-## Agenda
-- show packer
-- show vagrant using packer images
+## What to See
+- see packer
+- see vagrant using packer images
 
-- show nomad raw
-- show nomad in bootstrap mode
-- show nomad in cron mode
+- see nomad node raw
+- see nomad in bootstrap mode
+- see nomad in cron mode
 
-- show nomad service discovery in ansible (ws)
-- show nomad service discovery via ansible/golang template mix (wh)
-- show nomad service discovery as it should be (nweb)
+- see nomad service discovery in ansible (ws)
+- see nomad service discovery via ansible/golang template mix (wh)
+- see nomad service discovery as it should be (nweb, hweb)
 
 ## Cons
 - nomad not secure by default (mTLS, ACLs)
