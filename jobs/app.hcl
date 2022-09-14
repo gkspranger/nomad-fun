@@ -34,6 +34,7 @@ job "helloworld" {
       }
 
       driver = "exec"
+      // user = "app"
 
       service {
         name     = "hello-app"
