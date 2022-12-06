@@ -1,7 +1,0 @@
----
-
-- name: install cpanm
-  ansible.builtin.dnf:
-    name:
-      - perl-App-cpanminus
-    state: present

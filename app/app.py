@@ -9,9 +9,5 @@ INSTANCE = os.environ.get("APP_INSTANCE", 1)
 def hello_world():
     return f"Hello, World! Instance={INSTANCE}; Port={PORT}"
 
-@app.route("/healthz")
-def healthz():
-    return f"ok"
-
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=PORT)

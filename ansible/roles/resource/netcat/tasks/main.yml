@@ -1,6 +1,0 @@
----
-
-- name: install netcat
-  ansible.builtin.dnf:
-    name: nmap-ncat
-    state: present

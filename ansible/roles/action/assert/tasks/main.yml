@@ -1,7 +1,0 @@
----
-
-- name: check extravars
-  ansible.builtin.assert:
-    that:
-      - extravar_env in all_envs
-      - extravar_role in all_roles

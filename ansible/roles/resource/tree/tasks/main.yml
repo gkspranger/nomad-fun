@@ -1,6 +1,0 @@
----
-
-- name: install tree
-  ansible.builtin.dnf:
-    name: tree
-    state: present

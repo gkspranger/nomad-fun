@@ -1,9 +1,0 @@
----
-
-- name: setup dnf/dnf.conf
-  ansible.builtin.template:
-    src: dnf.conf
-    dest: /etc/dnf/dnf.conf
-    owner: root
-    group: root
-    mode: 0644
