@@ -43,5 +43,35 @@ job "bootstrap-web" {
         ]
       }
     }
+
+    task "config-node" {
+      driver = "raw_exec"
+
+      artifact {
+        source = "git::https://github.com/gkspranger/nomad-fun"
+        destination = "local/repo"
+
+        options {
+          ref = "simple"
+          depth = 1
+        }
+      }
+
+      config {
+        command = "/usr/bin/bash"
+        args    = [
+          "-c",
+          <<-EOF
+          cd ${NOMAD_TASK_DIR}/repo/ansible
+          /opt/ansible/2-13-3/ansible-playbook \
+          -i localhost, \
+          web.yml \
+          -e "extravar_bootstrapping=yes" \
+          -e "extravar_env=dev" \
+          -e "extravar_role=web"
+          EOF
+        ]
+      }
+    }
   }
 }
