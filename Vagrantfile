@@ -43,6 +43,11 @@ Vagrant.configure("2") do |config|
     n.vm.provision "shell", inline: $base
     n.vm.provision "shell", inline: $server
     n.vm.provision "shell", inline: $start
+
+    n.vm.provider "virtualbox" do |p|
+      p.memory = 2048
+      p.cpus = 1
+    end
   end
 
   config.vm.define "w1" do |n|
@@ -55,6 +60,11 @@ Vagrant.configure("2") do |config|
     n.vm.provision "shell", inline: $base
     n.vm.provision "shell", inline: $web
     n.vm.provision "shell", inline: $start
+
+    n.vm.provider "virtualbox" do |p|
+      p.memory = 2048
+      p.cpus = 1
+    end
   end
 
   config.vm.define "a1" do |n|
@@ -67,5 +77,10 @@ Vagrant.configure("2") do |config|
     n.vm.provision "shell", inline: $base
     n.vm.provision "shell", inline: $app
     n.vm.provision "shell", inline: $start
+
+    n.vm.provider "virtualbox" do |p|
+      p.memory = 2048
+      p.cpus = 1
+    end
   end
 end
