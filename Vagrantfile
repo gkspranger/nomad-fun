@@ -3,17 +3,19 @@ systemctl daemon-reload
 systemctl start nomad.service
 SCRIPT
 
+# ENV['VAGRANT_DEFAULT_PROVIDER'] = 'parallels'
+
 Vagrant.configure("2") do |config|
   config.vm.define "server1" do |n|
-    n.vm.box = "nomad-server-base"
+    n.vm.box = "nomad-base"
     n.vm.hostname = "server1"
 
-    n.vm.provider "parallels" do |p|
-      p.memory = 2048
-      p.cpus = 1
-    end
+    # n.vm.provider "virtualbox" do |p|
+    #   p.memory = 2048
+    #   p.cpus = 1
+    # end
 
-    n.vm.network :private_network, ip: "192.168.10.10"
+    n.vm.network :private_network, ip: "192.168.56.10"
     n.vm.network "forwarded_port", guest: 4646, host: 4646
 
     n.vm.provision "shell", inline: $setup
@@ -55,7 +57,7 @@ Vagrant.configure("2") do |config|
     n.vm.box = "app-base"
     n.vm.hostname = "app-client1"
 
-    n.vm.provider "parallels" do |p|
+    n.vm.provider "virtualbox" do |p|
       p.memory = 2048
       p.cpus = 1
     end

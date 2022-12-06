@@ -10,8 +10,8 @@ packer {
 source "vagrant" "rockylinux-8-nomad-server" {
   add_force    = true
   communicator = "ssh"
-  provider     = "parallels"
-  source_path  = "bento/rockylinux-8"
+  provider     = "virtualbox"
+  source_path  = "rockylinux/8"
 }
 
 build {

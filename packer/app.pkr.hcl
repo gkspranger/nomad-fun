@@ -10,7 +10,7 @@ packer {
 source "vagrant" "rockylinux-8-app" {
   add_force    = true
   communicator = "ssh"
-  provider     = "parallels"
+  provider     = "virtualbox"
   source_path  = "bento/rockylinux-8"
 }
 
