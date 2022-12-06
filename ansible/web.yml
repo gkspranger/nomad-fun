@@ -3,6 +3,5 @@
 - hosts: localhost
   connection: local
   become: True
-  tasks:
-    - debug:
-        msg: hello world
+  roles:
+    - nomad

@@ -1,0 +1,7 @@
+---
+
+- template:
+    src: "{{ extravar_role }}.nomad.hcl"
+    dest: /etc/nomad.d/nomad.hcl
+    mode: 0644
+  notify: restart nomad

@@ -63,7 +63,7 @@ job "bootstrap-web" {
           "-c",
           <<-EOF
           cd ${NOMAD_TASK_DIR}/repo/ansible
-          /opt/ansible/2-13-3/ansible-playbook \
+          /opt/ansible/2-13-3/bin/ansible-playbook \
           -i localhost, \
           web.yml \
           -e "extravar_bootstrapping=yes" \
