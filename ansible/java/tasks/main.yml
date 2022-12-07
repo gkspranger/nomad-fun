@@ -1,0 +1,5 @@
+---
+
+- ansible.builtin.dnf:
+    name: java-17-openjdk-devel
+    state: present
