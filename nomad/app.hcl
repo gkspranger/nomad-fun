@@ -15,8 +15,9 @@ client {
   servers = ["192.168.50.10"]
 
   meta {
-    role = "app_server"
+    role = "app"
     env = "dev"
+    state = "bootstrapping"
   }
 }
 

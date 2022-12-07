@@ -1,4 +1,4 @@
-job "bootstrap-web" {
+job "bootstrap-lb" {
   datacenters = ["dc1"]
   type = "sysbatch"
 
@@ -14,7 +14,7 @@ job "bootstrap-web" {
 
   constraint {
     attribute = "${meta.role}"
-    value     = "web_server"
+    value     = "lb"
   }
 
   constraint {
@@ -22,7 +22,7 @@ job "bootstrap-web" {
     value     = "dev"
   }
 
-  group "bootstrap-web" {
+  group "bootstrap-lb" {
     task "install-ansible" {
       lifecycle {
         hook = "prestart"
@@ -65,10 +65,10 @@ job "bootstrap-web" {
           cd ${NOMAD_TASK_DIR}/repo/ansible
           /opt/ansible/2-13-3/bin/ansible-playbook \
           -i localhost, \
-          web.yml \
-          -e "extravar_bootstrapping=yes" \
-          -e "extravar_env=dev" \
-          -e "extravar_role=web"
+          ${meta.role}.yml \
+          -e "extravar_bootstrapping=true" \
+          -e "extravar_env=${meta.env}" \
+          -e "extravar_role=${meta.role}"
           EOF
         ]
       }

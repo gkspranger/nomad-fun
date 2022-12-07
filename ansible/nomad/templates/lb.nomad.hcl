@@ -15,7 +15,7 @@ client {
   servers = ["192.168.50.10"]
 
   meta {
-    role = "web_server"
+    role = "lb"
     env = "dev"
     state = "ready"
   }

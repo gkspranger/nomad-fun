@@ -17,9 +17,9 @@ $server = <<-SCRIPT
 sudo cp /vagrant/nomad/server.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
-$web = <<-SCRIPT
+$lb = <<-SCRIPT
 # config nomad
-sudo cp /vagrant/nomad/web.hcl /etc/nomad.d/nomad.hcl
+sudo cp /vagrant/nomad/lb.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
 $app = <<-SCRIPT
@@ -33,9 +33,9 @@ systemctl start nomad.service
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.vm.define "s1" do |n|
+  config.vm.define "server1" do |n|
     n.vm.box = "rockylinux/9"
-    n.vm.hostname = "s1"
+    n.vm.hostname = "server1"
 
     n.vm.network "forwarded_port", guest: 4646, host: 4646
     n.vm.network "private_network", ip: "192.168.50.10"
@@ -50,15 +50,15 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "w1" do |n|
+  config.vm.define "lb1" do |n|
     n.vm.box = "rockylinux/9"
-    n.vm.hostname = "w1"
+    n.vm.hostname = "lb1"
 
     n.vm.network "forwarded_port", guest: 4646, host: 5646
     n.vm.network "private_network", ip: "192.168.50.20"
 
     n.vm.provision "shell", inline: $base
-    n.vm.provision "shell", inline: $web
+    n.vm.provision "shell", inline: $lb
     n.vm.provision "shell", inline: $start
 
     n.vm.provider "virtualbox" do |p|
@@ -67,9 +67,9 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "a1" do |n|
+  config.vm.define "app1" do |n|
     n.vm.box = "rockylinux/9"
-    n.vm.hostname = "a1"
+    n.vm.hostname = "app1"
 
     n.vm.network "forwarded_port", guest: 4646, host: 6646
     n.vm.network "private_network", ip: "192.168.50.30"

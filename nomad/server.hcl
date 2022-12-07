@@ -20,7 +20,7 @@ client {
   servers = ["192.168.50.10"]
 
   meta {
-    role = "nomad_server"
+    role = "nomad"
     env = "ops"
   }
 }

@@ -1,0 +1,10 @@
+---
+
+- yum_repository:
+    name: docker-ce-stable
+    description: Docker CE Stable - $basearch
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+
+- ansible.builtin.dnf:
+    name: docker-ce
+    state: present

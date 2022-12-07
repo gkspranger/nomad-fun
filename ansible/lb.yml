@@ -2,6 +2,7 @@
 
 - hosts: localhost
   connection: local
-  become: True
+  become: true
   roles:
+    - docker
     - nomad
