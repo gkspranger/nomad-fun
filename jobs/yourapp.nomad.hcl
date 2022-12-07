@@ -1,5 +1,6 @@
 job "yourapp" {
   datacenters = ["dc1"]
+  type        = "service"
 
   meta {
     run_uuid = "${uuidv4()}"

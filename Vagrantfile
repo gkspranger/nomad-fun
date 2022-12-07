@@ -55,6 +55,8 @@ Vagrant.configure("2") do |config|
     n.vm.hostname = "lb1"
 
     n.vm.network "forwarded_port", guest: 4646, host: 5646
+    n.vm.network "forwarded_port", guest: 8080, host: 8080
+    n.vm.network "forwarded_port", guest: 9080, host: 9080
     n.vm.network "private_network", ip: "192.168.50.20"
 
     n.vm.provision "shell", inline: $base

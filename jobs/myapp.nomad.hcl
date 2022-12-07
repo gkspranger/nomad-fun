@@ -1,5 +1,6 @@
 job "myapp" {
   datacenters = ["dc1"]
+  type        = "service"
 
   meta {
     run_uuid = "${uuidv4()}"
@@ -39,6 +40,11 @@ job "myapp" {
         name     = "myapp"
         port     = "http"
         provider = "nomad"
+
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.http.rule=Host(`myapp.com`)",
+        ]
       }
 
       env {
