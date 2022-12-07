@@ -39,6 +39,10 @@ job "lb" {
       name = "lb"
       provider = "nomad"
       port = "http"
+
+      tags = [
+        "traefik.enable=false",
+      ]
     }
 
     task "deploy-lb" {

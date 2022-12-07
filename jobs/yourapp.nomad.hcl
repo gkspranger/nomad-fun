@@ -40,6 +40,13 @@ job "yourapp" {
         name     = "yourapp"
         port     = "http"
         provider = "nomad"
+
+        address = "192.168.50.30"
+
+        tags = [
+          "traefik.enable=false",
+          "traefik.http.routers.http.rule=Host(`${NOMAD_JOB_NAME}.${meta.env}.example.com`)",
+        ]
       }
 
       env {
