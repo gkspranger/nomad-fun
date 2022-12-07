@@ -1,4 +1,4 @@
-job "myapp" {
+job "blueapp" {
   datacenters = ["dc1"]
   type        = "service"
 
@@ -21,14 +21,14 @@ job "myapp" {
     value     = "dev"
   }
 
-  group "myapp" {
+  group "blueapp" {
     count = 1
 
     network {
       port "http" {}
     }
 
-    task "deploy-myapp" {
+    task "deploy-blueapp" {
       // resources {
       //   cpu    = 50
       //   memory = 128
@@ -37,7 +37,7 @@ job "myapp" {
       driver = "exec"
 
       service {
-        name     = "myapp"
+        name     = "blueapp"
         port     = "http"
         provider = "nomad"
 
@@ -45,14 +45,16 @@ job "myapp" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.http.rule=Host(`${NOMAD_JOB_NAME}.${meta.env}.example.com`)",
+          "traefik.http.routers.${NOMAD_JOB_NAME}.rule=Host(`${NOMAD_JOB_NAME}.${meta.env}.example.com`)",
+          "traefik.http.routers.app-current.rule=Host(`app.${meta.env}.example.com`)",
+          "traefik.http.routers.app-current.service=blueapp",
         ]
       }
 
       env {
         APP_PORT = "${NOMAD_PORT_http}"
         APP_INSTANCE = "${NOMAD_ALLOC_INDEX}"
-        APP_NAME = "myapp"
+        APP_NAME = "blueapp"
       }
 
       artifact {
