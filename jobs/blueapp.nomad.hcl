@@ -62,7 +62,7 @@ job "blueapp" {
         APP_PORT = "${NOMAD_PORT_http}"
         APP_INSTANCE = "${NOMAD_ALLOC_INDEX}"
         APP_NAME = "blueapp"
-        APP_VERSION = "0.1"
+        APP_VERSION = "0.2"
       }
 
       artifact {
