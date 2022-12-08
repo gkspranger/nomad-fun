@@ -22,7 +22,14 @@ job "blueapp" {
   }
 
   group "blueapp" {
-    count = 1
+    count = 3
+
+    update {
+      max_parallel     = 1
+      canary           = 1
+      auto_revert      = true
+      auto_promote     = false
+    }
 
     network {
       port "http" {}
@@ -55,6 +62,7 @@ job "blueapp" {
         APP_PORT = "${NOMAD_PORT_http}"
         APP_INSTANCE = "${NOMAD_ALLOC_INDEX}"
         APP_NAME = "blueapp"
+        APP_VERSION = "0.1"
       }
 
       artifact {
