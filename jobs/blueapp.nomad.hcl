@@ -46,7 +46,7 @@ job "blueapp" {
       service {
         name     = "blueapp"
         port     = "http"
-        provider = "nomad"
+        // provider = "nomad"
 
         address = "192.168.50.30"
 

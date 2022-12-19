@@ -37,7 +37,7 @@ job "lb" {
 
     service {
       name = "lb"
-      provider = "nomad"
+      // provider = "nomad"
       port = "http"
 
       tags = [
@@ -56,8 +56,8 @@ job "lb" {
           "--api.insecure=true",
           "--entrypoints.web.address=:${NOMAD_PORT_http}",
           "--entrypoints.traefik.address=:${NOMAD_PORT_admin}",
-          "--providers.nomad=true",
-          "--providers.nomad.endpoint.address=http://192.168.50.10:4646",
+          "--providers.consulcatalog=true",
+          "--providers.consulcatalog.endpoint.address=http://192.168.50.10:8500",
         ]
       }
     }

@@ -39,7 +39,7 @@ job "greenapp" {
       service {
         name     = "greenapp"
         port     = "http"
-        provider = "nomad"
+        // provider = "nomad"
 
         address = "192.168.50.30"
 

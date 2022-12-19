@@ -6,24 +6,33 @@ yum clean all
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
 # install packages
-dnf -y install nomad net-tools tree git
+dnf -y install consul nomad net-tools tree git
 
 # setup nomad
+consul -autocomplete-install
 nomad -autocomplete-install
+
+mkdir /var/log/consul
+chown -R consul:consul /var/log/consul
 SCRIPT
 
 $server = <<-SCRIPT
 # config nomad
+sudo cp /vagrant/consul/server.hcl /etc/consul.d/consul.hcl
 sudo cp /vagrant/nomad/server.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
 $lb = <<-SCRIPT
 # config nomad
+echo 'bind_addr = "192.168.50.20"' > /etc/consul.d/bind.hcl
+sudo cp /vagrant/consul/client.hcl /etc/consul.d/consul.hcl
 sudo cp /vagrant/nomad/lb.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
 $app = <<-SCRIPT
 # config nomad
+echo 'bind_addr = "192.168.50.30"' > /etc/consul.d/bind.hcl
+sudo cp /vagrant/consul/client.hcl /etc/consul.d/consul.hcl
 sudo cp /vagrant/nomad/app.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
@@ -34,6 +43,8 @@ SCRIPT
 
 $start = <<-SCRIPT
 # start nomad
+systemctl start consul.service
+sleep 10
 systemctl start nomad.service
 SCRIPT
 
@@ -43,6 +54,7 @@ Vagrant.configure("2") do |config|
     n.vm.hostname = "server1"
 
     n.vm.network "forwarded_port", guest: 4646, host: 4646
+    n.vm.network "forwarded_port", guest: 8500, host: 8500
     n.vm.network "private_network", ip: "192.168.50.10"
 
     n.vm.provision "shell", inline: $base
