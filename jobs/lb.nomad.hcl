@@ -57,6 +57,7 @@ job "lb" {
           "--entrypoints.web.address=:${NOMAD_PORT_http}",
           "--entrypoints.traefik.address=:${NOMAD_PORT_admin}",
           "--providers.consulcatalog=true",
+          "--providers.consulcatalog.exposedByDefault=false",
           "--providers.consulcatalog.endpoint.address=http://192.168.50.10:8500",
         ]
       }
