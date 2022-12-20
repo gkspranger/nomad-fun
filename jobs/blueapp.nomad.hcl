@@ -83,6 +83,7 @@ job "blueapp" {
         EOH
         destination = "local/env"
         env         = true
+        change_mode = "restart"
       }
 
       config {
