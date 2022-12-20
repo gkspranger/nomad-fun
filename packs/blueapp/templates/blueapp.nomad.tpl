@@ -1,4 +1,4 @@
-job "blueapp" {
+job [[ template "job_name" . ]] {
   datacenters = ["dc1"]
   type        = "service"
 
@@ -22,7 +22,7 @@ job "blueapp" {
   }
 
   group "blueapp" {
-    count = 3
+    count = [[ .blueapp.count ]]
 
     update {
       max_parallel     = 1
