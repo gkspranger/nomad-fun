@@ -48,6 +48,14 @@ sleep 10
 systemctl start nomad.service
 SCRIPT
 
+$consul_kv = <<-SCRIPT
+# config consul kvs
+sleep 10
+consul kv put apps/dev/blueapp/env1 iamenv1
+consul kv put apps/dev/blueapp/env2 iamenv2
+consul kv put apps/dev/blueapp/env3 iamenv3
+SCRIPT
+
 Vagrant.configure("2") do |config|
   config.vm.define "server1" do |n|
     n.vm.box = "rockylinux/9"
@@ -60,6 +68,7 @@ Vagrant.configure("2") do |config|
     n.vm.provision "shell", inline: $base
     n.vm.provision "shell", inline: $server
     n.vm.provision "shell", inline: $start
+    n.vm.provision "shell", inline: $consul_kv
 
     n.vm.provider "virtualbox" do |p|
       p.memory = 2048
