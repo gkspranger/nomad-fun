@@ -28,7 +28,7 @@ job "blueapp" {
       max_parallel     = 1
       canary           = 1
       auto_revert      = true
-      auto_promote     = false
+      auto_promote     = true
     }
 
     network {
@@ -77,11 +77,11 @@ job "blueapp" {
 
       template {
         data        = <<EOH
-{{ range ls "apps/${meta.env}/${NOMAD_JOB_NAME}" }}
+{{ range ls "apps/dev/blueapp" }}
 {{ .Key | toUpper }}={{ .Value }}
 {{ end }}
         EOH
-        destination = "local/app.env"
+        destination = "local/env"
         env         = true
       }
 
