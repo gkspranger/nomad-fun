@@ -6,7 +6,7 @@ yum clean all
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
 # install packages
-dnf -y install consul nomad net-tools tree git
+dnf -y install consul nomad net-tools tree git wget
 
 # setup nomad
 consul -autocomplete-install
@@ -18,6 +18,9 @@ SCRIPT
 
 $server = <<-SCRIPT
 # config nomad
+wget https://github.com/hashicorp/nomad-pack/releases/download/nightly/nomad-pack-0.0.1.techpreview.4-1.x86_64.rpm
+dnf -y install nomad-pack*
+
 sudo cp /vagrant/consul/server.hcl /etc/consul.d/consul.hcl
 sudo cp /vagrant/nomad/server.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
