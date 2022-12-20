@@ -75,6 +75,16 @@ job "blueapp" {
         }
       }
 
+      template {
+        data        = <<EOH
+{{ range ls "apps/${meta.env}/${NOMAD_JOB_NAME}" }}
+{{ .Key | toUpper }}={{ .Value }}
+{{ end }}
+        EOH
+        destination = "local/app.env"
+        env         = true
+      }
+
       config {
         command = "/usr/bin/bash"
         args    = [
