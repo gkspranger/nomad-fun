@@ -10,9 +10,10 @@ VERSION = os.environ.get("APP_VERSION", "0.1")
 def get_env_vars():
     result = ""
     for k, v in os.environ.items():
-        if "env" in k:
-            result = f"{result}; {k}={v}"
-            print(f"{k}={v}")
+        print(f"{k}={v}")
+        # if "env" in k:
+        #     result = f"{result}; {k}={v}"
+        #     print(f"{k}={v}")
     return result
 
 @app.route("/")
