@@ -9,6 +9,7 @@ VERSION = os.environ.get("APP_VERSION", "0.1")
 
 def get_env_vars():
     result = ""
+    print(f"going to print env vars")
     for k, v in os.environ.items():
         print(f"{k}={v}")
         # if "env" in k:
@@ -18,7 +19,8 @@ def get_env_vars():
 
 @app.route("/")
 def hello_world():
-    return f"Hello, World! Instance={INSTANCE}; Port={PORT}; Name={NAME}; Version={VERSION}; EnvVars={get_env_vars()}"
+    get_env_vars()
+    return f"Hello, World! Instance={INSTANCE}; Port={PORT}; Name={NAME}; Version={VERSION}; EnvVars=''"
 
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=PORT)
