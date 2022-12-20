@@ -24,12 +24,14 @@ job [[ template "job_name" . ]] {
   group "blueapp" {
     count = [[ .blueapp.count ]]
 
+    [[ if .blueapp.enable_canary_update ]]
     update {
       max_parallel     = 1
-      canary           = 1
+      canary           = [[ .blueapp.count ]]
       auto_revert      = true
       auto_promote     = true
     }
+    [[ end ]]
 
     network {
       port "http" {}

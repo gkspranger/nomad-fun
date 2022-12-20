@@ -11,4 +11,8 @@ to develop locally, CD into pack you are working on
 
 ```bash
 nomad-pack render .
+
+nomad-pack info .
+
+nomad-pack render . --var=enable_canary_update=true --var=count=4
 ```

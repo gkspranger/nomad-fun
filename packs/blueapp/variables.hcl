@@ -9,3 +9,9 @@ variable "job_name" {
   type        = string
   default = ""
 }
+
+variable "enable_canary_update" {
+  description = "Enable canary deployments"
+  type        = bool
+  default = false
+}
