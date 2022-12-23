@@ -1,6 +1,9 @@
 import os
 from flask import Flask
+from prometheus_flask_exporter import PrometheusMetrics
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+metrics.info('myapp', 'Application info', version='1.0.3')
 
 PORT = os.environ.get("APP_PORT", 10000)
 INSTANCE = os.environ.get("APP_INSTANCE", 1)

@@ -35,13 +35,46 @@ job "prom" {
       name = "prom"
       // provider = "nomad"
       port = "http"
+
+      address = "192.168.50.50"
     }
 
     task "deploy-prom" {
       driver = "docker"
 
+      template {
+        change_mode = "noop"
+        destination = "local/prometheus.yml"
+        data = <<EOH
+---
+global:
+  scrape_interval:     5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'nomad_metrics'
+    consul_sd_configs:
+    - server: '192.168.50.10:8500'
+      services: ['nomad-client', 'nomad']
+
+    scrape_interval: 5s
+    metrics_path: /v1/metrics
+    params:
+      format: ['prometheus']
+
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['127.0.0.1:9090']
+EOH
+      }
+
       config {
         image = "prom/prometheus:v2.40.7"
+
+        volumes = [
+          "local/prometheus.yml:/etc/prometheus/prometheus.yml",
+        ]
+
         ports = ["http"]
       }
     }
