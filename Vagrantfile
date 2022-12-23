@@ -145,6 +145,7 @@ Vagrant.configure("2") do |config|
 
     n.vm.network "forwarded_port", guest: 4646, host: 8646
     n.vm.network "forwarded_port", guest: 9090, host: 9090
+    n.vm.network "forwarded_port", guest: 3000, host: 3000
     n.vm.network "private_network", ip: "192.168.50.50"
 
     n.vm.provision "shell", inline: $base

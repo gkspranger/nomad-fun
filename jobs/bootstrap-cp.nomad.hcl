@@ -1,4 +1,4 @@
-job "bootstrap-lb" {
+job "bootstrap-cp" {
   datacenters = ["dc1"]
   type = "sysbatch"
 
@@ -22,7 +22,7 @@ job "bootstrap-lb" {
     value     = "dev"
   }
 
-  group "bootstrap-lb" {
+  group "bootstrap-cp" {
     task "install-ansible" {
       lifecycle {
         hook = "prestart"
