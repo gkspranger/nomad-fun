@@ -83,6 +83,7 @@ EOH
 
       config {
         image = "prom/prometheus:v2.40.7"
+        network_mode = "host"
 
         volumes = [
           "local/prometheus.yml:/etc/prometheus/prometheus.yml",
