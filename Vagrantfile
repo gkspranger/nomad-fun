@@ -44,6 +44,13 @@ $javaapp = <<-SCRIPT
 sudo cp /vagrant/nomad/javaapp.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
+$cp = <<-SCRIPT
+# config nomad
+echo 'bind_addr = "192.168.50.50"' > /etc/consul.d/bind.hcl
+sudo cp /vagrant/consul/client.hcl /etc/consul.d/consul.hcl
+sudo cp /vagrant/nomad/cp.hcl /etc/nomad.d/nomad.hcl
+SCRIPT
+
 $start = <<-SCRIPT
 # start nomad
 systemctl start consul.service
@@ -124,6 +131,24 @@ Vagrant.configure("2") do |config|
 
     n.vm.provision "shell", inline: $base
     n.vm.provision "shell", inline: $javaapp
+    n.vm.provision "shell", inline: $start
+
+    n.vm.provider "virtualbox" do |p|
+      p.memory = 2048
+      p.cpus = 1
+    end
+  end
+
+  config.vm.define "cp1" do |n|
+    n.vm.box = "rockylinux/9"
+    n.vm.hostname = "cp1"
+
+    n.vm.network "forwarded_port", guest: 4646, host: 8646
+    n.vm.network "forwarded_port", guest: 9090, host: 9090
+    n.vm.network "private_network", ip: "192.168.50.50"
+
+    n.vm.provision "shell", inline: $base
+    n.vm.provision "shell", inline: $cp
     n.vm.provision "shell", inline: $start
 
     n.vm.provider "virtualbox" do |p|
