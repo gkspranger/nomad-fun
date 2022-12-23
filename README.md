@@ -16,3 +16,9 @@ nomad-pack info .
 
 nomad-pack render . --var=enable_canary_update=true --var=count=4
 ```
+
+
+```bash
+# prom query to get request count every 10s
+increase(flask_http_request_total[10s])
+```

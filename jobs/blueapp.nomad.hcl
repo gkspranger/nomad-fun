@@ -51,6 +51,7 @@ job "blueapp" {
         address = "192.168.50.30"
 
         tags = [
+          "flask_app=true",
           "traefik.enable=true",
           "traefik.http.routers.${NOMAD_JOB_NAME}.rule=Host(`${NOMAD_JOB_NAME}.${meta.env}.example.com`)",
           "traefik.http.routers.app-current.rule=Host(`app.${meta.env}.example.com`)",

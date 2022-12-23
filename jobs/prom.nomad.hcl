@@ -55,7 +55,9 @@ scrape_configs:
   - job_name: 'nomad_metrics'
     consul_sd_configs:
     - server: '192.168.50.10:8500'
-      services: ['nomad-client', 'nomad']
+      services:
+      - 'nomad-client'
+      - 'nomad'
 
     scrape_interval: 5s
     metrics_path: /v1/metrics
@@ -65,6 +67,17 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
     - targets: ['127.0.0.1:9090']
+
+    scrape_interval: 5s
+
+  - job_name: 'flask_apps'
+    consul_sd_configs:
+    - server: '192.168.50.10:8500'
+      tags:
+      - 'flask_app=true'
+
+    scrape_interval: 5s
+    metrics_path: /metrics
 EOH
       }
 
