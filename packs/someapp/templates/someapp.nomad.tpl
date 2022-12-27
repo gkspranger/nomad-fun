@@ -1,4 +1,4 @@
-job [[ template "job_name" . ]] {
+job [[ .someapp.name | quote ]] {
   datacenters = ["dc1"]
   type        = "service"
 
@@ -21,50 +21,40 @@ job [[ template "job_name" . ]] {
     value     = "dev"
   }
 
-  group "blueapp" {
-    count = [[ .blueapp.count ]]
-
-    [[ if .blueapp.enable_canary_update ]]
-    update {
-      max_parallel     = 1
-      canary           = [[ .blueapp.count ]]
-      auto_revert      = true
-      auto_promote     = true
-    }
-    [[ end ]]
+  group "someapp" {
+    count = [[ .someapp.count ]]
 
     network {
       port "http" {}
     }
 
-    task "deploy-blueapp" {
-      // resources {
-      //   cpu    = 50
-      //   memory = 128
-      // }
-
+    task "deploy-someapp" {
       driver = "exec"
 
       service {
-        name     = "blueapp"
+        name     = [[ .someapp.name | quote ]]
         port     = "http"
-        // provider = "nomad"
 
         address = "192.168.50.30"
 
         tags = [
+          "flask_app=true",
+          [[ if .someapp.enable_routing ]]
           "traefik.enable=true",
-          "traefik.http.routers.${NOMAD_JOB_NAME}.rule=Host(`${NOMAD_JOB_NAME}.${meta.env}.example.com`)",
-          "traefik.http.routers.app-current.rule=Host(`app.${meta.env}.example.com`)",
-          "traefik.http.routers.app-current.service=blueapp",
+          "traefik.http.routers.${NOMAD_JOB_NAME}.rule=Host(`${NOMAD_JOB_NAME}.example.com`)",
+          [[ end ]]
+          [[ if .someapp.custom_domain ]]
+          "traefik.http.routers.${NOMAD_JOB_NAME}-current.rule=Host(`[[ .someapp.custom_domain ]]`)",
+          "traefik.http.routers.${NOMAD_JOB_NAME}-current.service=${NOMAD_JOB_NAME}",
+          [[ end ]]
         ]
       }
 
       env {
         APP_PORT = "${NOMAD_PORT_http}"
         APP_INSTANCE = "${NOMAD_ALLOC_INDEX}"
-        APP_NAME = "blueapp"
-        APP_VERSION = "0.2"
+        APP_NAME = [[ .someapp.name | quote ]]
+        APP_VERSION = [[ .someapp.version | quote ]]
       }
 
       artifact {
@@ -75,17 +65,6 @@ job [[ template "job_name" . ]] {
           ref = "simple"
           depth = 1
         }
-      }
-
-      template {
-        data        = <<EOH
-{{ range ls "apps/dev/blueapp" }}
-{{ .Key | toUpper }}={{ .Value }}
-{{ end }}
-        EOH
-        destination = "local/env"
-        env         = true
-        change_mode = "restart"
       }
 
       config {

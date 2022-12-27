@@ -3,7 +3,7 @@ app {
   author = ""
 }
 pack {
-  name        = "blueapp"
+  name        = "someapp"
   description = ""
   url         = ""
   version     = ""
