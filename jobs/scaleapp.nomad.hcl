@@ -88,7 +88,7 @@ job "scaleapp" {
 
       template {
         data        = <<EOH
-{{ range ls "apps/dev/scaleapp" }}
+{{ range ls "apps/dev/blueapp" }}
 {{ .Key | toUpper }}={{ .Value }}
 {{ end }}
         EOH
