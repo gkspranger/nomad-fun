@@ -48,9 +48,32 @@ job "lb" {
     task "deploy-lb" {
       driver = "docker"
 
+      template {
+        change_mode = "noop"
+        destination = "local/wapp.yml"
+        data = <<EOH
+---
+## Dynamic configuration
+http:
+  routers:
+    router0:
+      service: app_weighted
+      rule: "Host(`wapp.example.com`)"
+  services:
+    app_weighted:
+      weighted:
+        services:
+        - name: blueapp@consulcatalog
+          weight: 3
+        - name: greenapp@consulcatalog
+          weight: 1
+EOH
+      }
+
       config {
         image = "traefik:2.9"
         ports = ["admin", "http"]
+        network_mode = "host"
         args = [
           "--api.dashboard=true",
           "--api.insecure=true",
@@ -59,6 +82,7 @@ job "lb" {
           "--providers.consulcatalog=true",
           "--providers.consulcatalog.exposedByDefault=false",
           "--providers.consulcatalog.endpoint.address=http://192.168.50.10:8500",
+          "--providers.file.filename=local/wapp.yml",
         ]
       }
     }
