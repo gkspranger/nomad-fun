@@ -50,7 +50,7 @@ job "lb" {
 
       template {
         change_mode = "noop"
-        destination = "local/wapp.yml"
+        destination = "local/traefik/wapp.yml"
         data = <<EOH
 ---
 ## Dynamic configuration
@@ -70,6 +70,28 @@ http:
 EOH
       }
 
+      template {
+        change_mode = "noop"
+        destination = "local/traefik/wapp1.yml"
+        data = <<EOH
+---
+## Dynamic configuration
+http:
+  routers:
+    router1:
+      service: app_weighted1
+      rule: "Host(`wapp1.example.com`)"
+  services:
+    app_weighted1:
+      weighted:
+        services:
+        - name: blueapp@consulcatalog
+          weight: 3
+        - name: greenapp@consulcatalog
+          weight: 0
+EOH
+      }
+
       config {
         image = "traefik:2.9"
         ports = ["admin", "http"]
@@ -82,7 +104,7 @@ EOH
           "--providers.consulcatalog=true",
           "--providers.consulcatalog.exposedByDefault=false",
           "--providers.consulcatalog.endpoint.address=http://192.168.50.10:8500",
-          "--providers.file.filename=local/wapp.yml",
+          "--providers.file.directory=local/traefik",
         ]
       }
     }
