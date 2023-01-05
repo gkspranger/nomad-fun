@@ -92,6 +92,20 @@ http:
 EOH
       }
 
+      template {
+        change_mode = "noop"
+        destination = "local/traefik/future.yml"
+        data = <<EOH
+---
+## Dynamic configuration
+http:
+  routers:
+    router-future:
+      service: greenapp@consulcatalog
+      rule: "Host(`wapp.example.com`) && HeadersRegexp(`Cookie`, `future=.*`)"
+EOH
+      }
+
       config {
         image = "traefik:2.9"
         ports = ["admin", "http"]
