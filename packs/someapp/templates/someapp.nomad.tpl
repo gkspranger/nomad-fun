@@ -43,10 +43,6 @@ job [[ .someapp.name | quote ]] {
           "traefik.enable=true",
           "traefik.http.routers.${NOMAD_JOB_NAME}.rule=Host(`${NOMAD_JOB_NAME}.example.com`)",
           [[ end ]]
-          [[ if .someapp.custom_domain ]]
-          "traefik.http.routers.${NOMAD_JOB_NAME}-current.rule=Host(`[[ .someapp.custom_domain ]]`)",
-          "traefik.http.routers.${NOMAD_JOB_NAME}-current.service=${NOMAD_JOB_NAME}",
-          [[ end ]]
         ]
       }
 

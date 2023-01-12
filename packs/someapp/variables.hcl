@@ -21,9 +21,3 @@ variable "enable_routing" {
   type        = bool
   default = false
 }
-
-variable "custom_domain" {
-  description = "The domain this app also responds to"
-  type        = string
-  default = ""
-}
