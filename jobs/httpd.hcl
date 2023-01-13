@@ -26,6 +26,7 @@ job "httpd" {
       port "http" {
         static = 10000
       }
+      port "dhttp" {}
     }
 
     service {
@@ -47,8 +48,7 @@ job "httpd" {
       }
 
       env {
-        HWEB_ENV = "${meta.env}"
-        HWEB_ROLE = "${meta.role}"
+        HTTPD_PORT = "${NOMAD_PORT_dhttp}"
       }
 
       config {
