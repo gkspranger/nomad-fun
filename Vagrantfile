@@ -6,7 +6,7 @@ yum clean all
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
 # install packages
-dnf -y install consul nomad net-tools tree git wget
+dnf -y install consul consul-template nomad net-tools tree git wget
 
 # setup nomad
 consul -autocomplete-install
@@ -41,6 +41,8 @@ SCRIPT
 
 $javaapp = <<-SCRIPT
 # config nomad
+echo 'bind_addr = "192.168.50.40"' > /etc/consul.d/bind.hcl
+sudo cp /vagrant/consul/client.hcl /etc/consul.d/consul.hcl
 sudo cp /vagrant/nomad/javaapp.hcl /etc/nomad.d/nomad.hcl
 SCRIPT
 
@@ -64,6 +66,7 @@ sleep 10
 consul kv put apps/dev/blueapp/env1 iamenv1
 consul kv put apps/dev/blueapp/env2 iamenv2
 consul kv put apps/dev/blueapp/env3 iamenv3
+consul kv put apps/dev/ws/domain-suffix '-s'
 SCRIPT
 
 Vagrant.configure("2") do |config|
