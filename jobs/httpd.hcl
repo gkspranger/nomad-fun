@@ -42,6 +42,17 @@ job "httpd" {
 
       address = "192.168.50.30"
 
+      check {
+        type     = "http"
+        port     = "dhttp"
+        path     = "/status.html"
+        interval = "5s"
+        timeout  = "2s"
+        header {
+          Host = ["secure.example.com"]
+        }
+      }
+
       tags = [
         "traefik.enable=true",
         "traefik.http.routers.${NOMAD_JOB_NAME}.rule=Host(`secure.example.com`)",
@@ -91,6 +102,11 @@ job "httpd" {
       template {
         source        = "local/repo/templates/security.rewrites.conf"
         destination   = "/etc/httpd/conf/security.rewrites.conf"
+      }
+
+      template {
+        source        = "local/repo/templates/secure.example.com.rewrites.conf"
+        destination   = "/etc/httpd/conf/secure.example.com.rewrites.conf"
       }
 
       template {
