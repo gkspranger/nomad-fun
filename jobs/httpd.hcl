@@ -32,9 +32,7 @@ job "httpd" {
       max_parallel      = 1
       health_check      = "checks"
       min_healthy_time  = "10s"
-      healthy_deadline  = "1m"
-      progress_deadline = "0"
-      auto_revert       = true
+      healthy_deadline  = "5m"
       stagger           = "30s"
     }
 
@@ -74,11 +72,11 @@ job "httpd" {
           "-c",
           <<-EOF
           set -eu
-          mkdir -p /local/{root,api.example.com,secure.example.com}/cgi-bin
-          mkdir -p /local/{root,api.example.com,secure.example.com}/html
+          mkdir -p /local/{root,api,secure}/cgi-bin
+          mkdir -p /local/{root,api,secure}/html
           mkdir -p /local/logs
           mkdir -p /run/httpd
-          rm -fr /etc/httpd/conf.d/*
+          ln -s /local/status.html /local/secure/html/status.html
           apachectl configtest
           /usr/sbin/httpd -f /etc/httpd/conf/httpd.conf -DFOREGROUND
           EOF
@@ -87,7 +85,7 @@ job "httpd" {
 
       template {
         data          = "server available {{ env \"HTTPD_INDEX\" }}"
-        destination   = "/local/html/status.html"
+        destination   = "/local/status.html"
       }
 
       template {
