@@ -41,7 +41,7 @@ job "httpd" {
         destination = "local/repo"
 
         options {
-          ref = "main"
+          ref = "simple"
           depth = 1
         }
       }
@@ -74,7 +74,12 @@ job "httpd" {
 
       template {
         source        = "local/repo/templates/httpd.conf"
-        destination   = "/etc/httpd/confd/httpd.conf"
+        destination   = "/etc/httpd/conf/httpd.conf"
+      }
+
+      template {
+        source        = "local/repo/templates/security.rewrites.conf"
+        destination   = "/etc/httpd/conf/security.rewrites.conf"
       }
     }
   }
