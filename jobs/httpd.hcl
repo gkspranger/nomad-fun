@@ -76,16 +76,11 @@ job "httpd" {
           mkdir -p /local/{root,api,secure}/html
           mkdir -p /local/logs
           mkdir -p /run/httpd
-          ln -s /local/status.html /local/secure/html/status.html
+          echo "server available ${NOMAD_ALLOC_INDEX}" > /local/secure/html/status.html
           apachectl configtest
           /usr/sbin/httpd -f /etc/httpd/conf/httpd.conf -DFOREGROUND
           EOF
         ]
-      }
-
-      template {
-        data          = "server available {{ env \"HTTPD_INDEX\" }}"
-        destination   = "/local/status.html"
       }
 
       template {
@@ -96,6 +91,11 @@ job "httpd" {
       template {
         source        = "local/repo/templates/security.rewrites.conf"
         destination   = "/etc/httpd/conf/security.rewrites.conf"
+      }
+
+      template {
+        source        = "local/repo/templates/secure.example.com.conf"
+        destination   = "/etc/httpd/conf.d/000-secure.example.com.conf"
       }
     }
   }
