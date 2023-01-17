@@ -30,6 +30,12 @@ job "prom" {
       read_only = false
     }
 
+    volume "prometheus2" {
+      type      = "host"
+      source    = "prometheus2"
+      read_only = false
+    }
+
     network {
       port  "http"{
          static = 9090
@@ -48,8 +54,10 @@ job "prom" {
     task "deploy-prom" {
       driver = "docker"
 
+      user = "22222:22222"
+
       volume_mount {
-        volume      = "prometheus"
+        volume      = "prometheus2"
         destination = "/prometheus"
         read_only   = false
       }
