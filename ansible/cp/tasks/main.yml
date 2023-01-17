@@ -1,5 +1,18 @@
 ---
 
+- name: Add CP group
+  ansible.builtin.group:
+    name: cp
+    state: present
+    gid: 22222
+
+- name: Add CP user
+  ansible.builtin.user:
+    name: cp
+    state: present
+    uid: 22222
+    group: cp
+
 - name: Create prometheus dir
   ansible.builtin.file:
     path: /mnt/prometheus
