@@ -1,8 +1,8 @@
 ---
 
-- name: Create hostdata01 dir
+- name: Create prometheus dir
   ansible.builtin.file:
-    path: /opt/hostdata01
+    path: /mnt/prometheus
     state: directory
     owner: nobody
     group: nobody
