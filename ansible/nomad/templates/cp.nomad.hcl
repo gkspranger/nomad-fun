@@ -34,3 +34,8 @@ telemetry {
   publish_allocation_metrics = true
   publish_node_metrics = true
 }
+
+host_volume "mysql" {
+  path      = "/opt/hostdata"
+  read_only = false
+}
