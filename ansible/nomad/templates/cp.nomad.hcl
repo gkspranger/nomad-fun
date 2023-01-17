@@ -20,8 +20,8 @@ client {
     state = "ready"
   }
 
-  host_volume "mysql" {
-    path      = "/opt/hostdata"
+  host_volume "prometheus" {
+    path      = "/opt/hostdata01"
     read_only = false
   }
 }

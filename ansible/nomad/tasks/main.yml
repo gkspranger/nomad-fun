@@ -2,7 +2,7 @@
 
 - name: Create hostdata dir
   ansible.builtin.file:
-    path: /opt/hostdata
+    path: /opt/hostdata01
     state: directory
     mode: 0755
 
