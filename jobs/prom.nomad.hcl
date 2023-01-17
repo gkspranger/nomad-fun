@@ -24,6 +24,12 @@ job "prom" {
   group "prom" {
     count = 1
 
+    volume "prometheus" {
+      type      = "host"
+      source    = "prometheus"
+      read_only = false
+    }
+
     network {
       port  "http"{
          static = 9090
@@ -41,6 +47,12 @@ job "prom" {
 
     task "deploy-prom" {
       driver = "docker"
+
+      volume_mount {
+        volume      = "prometheus"
+        destination = "/prometheus"
+        read_only   = false
+      }
 
       template {
         change_mode = "noop"

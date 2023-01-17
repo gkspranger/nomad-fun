@@ -1,11 +1,5 @@
 ---
 
-- name: Create hostdata dir
-  ansible.builtin.file:
-    path: /opt/hostdata01
-    state: directory
-    mode: 0755
-
 - template:
     src: "{{ extravar_role }}.nomad.hcl"
     dest: /etc/nomad.d/nomad.hcl

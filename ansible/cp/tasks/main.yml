@@ -1,0 +1,9 @@
+---
+
+- name: Create hostdata01 dir
+  ansible.builtin.file:
+    path: /opt/hostdata01
+    state: directory
+    owner: nobody
+    group: nobody
+    mode: 0755
