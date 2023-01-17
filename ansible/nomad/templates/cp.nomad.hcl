@@ -21,7 +21,12 @@ client {
   }
 
   host_volume "prometheus" {
-    path      = "/opt/hostdata01"
+    path      = "/mnt/prometheus"
+    read_only = false
+  }
+
+  host_volume "grafana" {
+    path      = "/mnt/grafana"
     read_only = false
   }
 }
