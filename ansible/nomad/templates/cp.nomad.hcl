@@ -25,8 +25,18 @@ client {
     read_only = false
   }
 
+  host_volume "prometheus2" {
+    path      = "/mnt/prometheus2"
+    read_only = false
+  }
+
   host_volume "grafana" {
     path      = "/mnt/grafana"
+    read_only = false
+  }
+
+  host_volume "grafana2" {
+    path      = "/mnt/grafana2"
     read_only = false
   }
 }

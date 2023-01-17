@@ -21,10 +21,26 @@
     group: nobody
     mode: 0755
 
+- name: Create prometheus dir
+  ansible.builtin.file:
+    path: /mnt/prometheus2
+    state: directory
+    owner: cp
+    group: cp
+    mode: 0755
+
 - name: Create grafana dir
   ansible.builtin.file:
     path: /mnt/grafana
     state: directory
     owner: nobody
     group: nobody
+    mode: 0755
+
+- name: Create grafana dir
+  ansible.builtin.file:
+    path: /mnt/grafana2
+    state: directory
+    owner: cp
+    group: cp
     mode: 0755
