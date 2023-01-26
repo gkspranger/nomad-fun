@@ -6,7 +6,7 @@
             [iapetos.collector.jvm :as prom-jvm]
             [iapetos.export :as prom-export]))
 
-(def port (or (System/getenv "APP_PORT") 8080))
+(def port (Integer/parseInt (or (System/getenv "APP_PORT") "8080")))
 
 (defonce prom-reg
   (-> (prom/collector-registry)
