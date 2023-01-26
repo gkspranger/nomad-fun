@@ -6,7 +6,9 @@
             [iapetos.collector.jvm :as prom-jvm]
             [iapetos.export :as prom-export]))
 
-(def port (Integer/parseInt (or (System/getenv "APP_PORT") "8080")))
+(def app-port (Integer/parseInt (or (System/getenv "APP_PORT") "8080")))
+(def app-name (or (System/getenv "APP_NAME") "DEFAULT"))
+(def app-instance (or (System/getenv "APP_INSTANCE") "DEFAULT"))
 
 (defonce prom-reg
   (-> (prom/collector-registry)
@@ -14,11 +16,15 @@
       (prom/register
        (prom/counter :app/greets))))
 
+(defn hello-text
+  []
+  (str "app_name=" app-name "; app_instance=" app-instance "; app_port=" app-port))
+
 (defn respond-hello
   [_request]
   (-> prom-reg
       (prom/inc :app/greets))
-  {:status 200 :body "Hello, world!"})
+  {:status 200 :body (hello-text)})
 
 (defn respond-metrics
   [_request]
@@ -34,7 +40,7 @@
    {::http/routes routes
     ::http/type :jetty
     ::http/host "0.0.0.0"
-    ::http/port port}))
+    ::http/port app-port}))
 
 (defn -main
   [& _args]
